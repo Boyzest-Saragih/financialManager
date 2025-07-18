@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "671040492929",
+    "project_id": "finance-manager-c6dc5",
+    "storage_bucket": "finance-manager-c6dc5.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:671040492929:android:33dc1788faa910374a8480",
+        "android_client_info": {
+          "package_name": "com.boyokers.financemanager"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAsjMJXJkZIUyn64ksCmthdrCCJughtceo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:671040492929:android:d09fef0514c7117c4a8480",
+        "android_client_info": {
+          "package_name": "com.example.financemanager"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAsjMJXJkZIUyn64ksCmthdrCCJughtceo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
