@@ -1,4 +1,5 @@
 import 'package:financemanager/firebase_options.dart';
+import 'package:financemanager/screens/register_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -17,11 +18,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'FinTrack',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        primaryColor: const Color(0xF9FAFB),
       ),
-      home: Column(),
+      home: RegisterScreen(),
     );
   }
 }
