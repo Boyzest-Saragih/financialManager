@@ -1,20 +1,20 @@
-import 'package:financemanager/screens/home_screen.dart';
-import 'package:financemanager/screens/register_screen.dart';
-import 'package:financemanager/widgets/custom_snackbar.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
+import 'package:financemanager/screens/home/home_screen.dart';
+import 'package:financemanager/screens/auth/login_screen.dart';
 import 'package:financemanager/services/auth_services.dart';
 import 'package:financemanager/widgets/custom_button.dart';
+import 'package:financemanager/widgets/custom_snackbar.dart';
 import 'package:financemanager/widgets/custom_textField.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _RegisterScreenState extends State<RegisterScreen> {
   final emailCtr = TextEditingController();
   final passCtr = TextEditingController();
   final auth = AuthServices();
@@ -25,8 +25,10 @@ class _LoginScreenState extends State<LoginScreen> {
       backgroundColor: const Color(0xFFF9FAFB),
       body: Center(
         child: SingleChildScrollView(
+          // Changed padding to match LoginScreen
           padding: const EdgeInsets.all(24),
           child: Column(
+            // Added mainAxisSize to match LoginScreen
             mainAxisSize: MainAxisSize.min,
             children: [
               const Text(
@@ -39,7 +41,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               const SizedBox(height: 8),
               const Text(
-                "Welcome back to your financial journey",
+                "Welcome to your financial journey",
                 style: TextStyle(fontSize: 14, color: Colors.black54),
               ),
               const SizedBox(height: 24),
@@ -62,7 +64,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text(
-                      "Sign In",
+                      "Sign Up",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
@@ -78,11 +80,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     const SizedBox(height: 16),
                     CustomButton(
-                      title: "Login",
+                      title: "Register",
                       onPress: () async {
                         try {
-                          await auth.login(emailCtr.text, passCtr.text);
-
+                          await auth.register(emailCtr.text, passCtr.text);
                           if (!mounted) return;
 
                           ScaffoldMessenger.of(context).showSnackBar(
@@ -92,6 +93,8 @@ class _LoginScreenState extends State<LoginScreen> {
                               icon: Icons.check_circle_outline,
                             ),
                           );
+                          await auth.login(emailCtr.text, passCtr.text);
+                          if (!mounted) return;
 
                           Navigator.pushAndRemoveUntil(
                             context,
@@ -113,24 +116,26 @@ class _LoginScreenState extends State<LoginScreen> {
                         }
                       },
                     ),
-                    const SizedBox(height: 12),
-                    Center(
-                      child: TextButton(
-                        onPressed: () {},
-                        child: const Text("Forgot your password?"),
-                      ),
-                    ),
+
+                    // Adjusted spacing to match LoginScreen
                     const SizedBox(height: 12),
                     Row(
-                      children: [
-                        const Expanded(child: Divider(color: Colors.grey)),
-                        const Padding(
+                      children: const [
+                        // Removed thickness to match LoginScreen
+                        Expanded(
+                          child: Divider(color: Colors.grey),
+                        ),
+                        Padding(
                           padding: EdgeInsets.symmetric(horizontal: 8.0),
                           child: Text("OR CONTINUE WITH"),
                         ),
-                        const Expanded(child: Divider(color: Colors.grey)),
+                        // Removed thickness to match LoginScreen
+                        Expanded(
+                          child: Divider(color: Colors.grey),
+                        ),
                       ],
                     ),
+                    // Adjusted spacing to match LoginScreen
                     const SizedBox(height: 12),
                     CustomButton(
                       title: "Continue with Google",
@@ -145,25 +150,25 @@ class _LoginScreenState extends State<LoginScreen> {
                       colorBack: const Color(0xFFE6E6E6),
                       colorFront: Colors.black,
                     ),
+
                     const SizedBox(height: 20),
                     Center(
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text("Don't have an account?"),
+                          const Text("Already have an account?"),
                           TextButton(
                             onPressed: () {
                               Navigator.pushAndRemoveUntil(
                                 context,
                                 MaterialPageRoute(
                                   builder:
-                                      (BuildContext context) =>
-                                          RegisterScreen(),
+                                      (BuildContext context) => LoginScreen(),
                                 ),
                                 ModalRoute.withName("/"),
                               );
                             },
-                            child: const Text("Sign up"),
+                            child: const Text("Sign in"),
                           ),
                         ],
                       ),
