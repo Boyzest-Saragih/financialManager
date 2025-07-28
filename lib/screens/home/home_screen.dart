@@ -1,9 +1,9 @@
 // import 'package:financemanager/services/auth_services.dart';
-import 'package:financemanager/widgets/custom_card_container.dart';
+import 'package:financemanager/widgets/custom/custom_card_container.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:fl_chart/fl_chart.dart';
-import '../../utils/line_chart.dart';
+import '../../widgets/custom_chart/line_chart.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -243,7 +243,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                       child: Padding(
                         padding: const EdgeInsets.all(4),
-                        child: LineChart(mainLineChartData()),
+                        child: LineChartNetIncome(),
                       ),
                     ),
 
@@ -318,109 +318,316 @@ class _HomeScreenState extends State<HomeScreen> {
                 childContainer: Container(
                   padding: const EdgeInsets.all(6),
                   child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text("Quick Actions"),
-                    const SizedBox(height: 20),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        CustomCardContainer(
-                          widthContainer: 150,
-                          cardColor: const Color(0xFFF9FAFB),
-                          isShadow: false,
-                          isBorder: true,
-                          childContainer: Column(
-                            children: [
-                              const Icon(
-                                Icons.attach_money,
-                                size: 20,
-                                color: Colors.red,
-                              ),
-                              const SizedBox(height: 10),
-                              const Text(
-                                "Add Expense",
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                              const Text("Quick entry"),
-                            ],
-                          ),
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        "Quick Actions",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
                         ),
-                        CustomCardContainer(
-                          widthContainer: 150,
-                          cardColor: const Color(0xFFF9FAFB),
-                          isShadow: false,
-                          isBorder: true,
-                          childContainer: Column(
-                            children: [
-                              const Icon(
-                                Icons.attach_money,
-                                size: 20,
-                                color: Colors.red,
+                      ),
+                      const SizedBox(height: 20),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          InkWell(
+                            onTap: () {},
+                            child: CustomCardContainer(
+                              widthContainer: 170,
+                              cardColor: const Color(0xFFF9FAFB),
+                              isShadow: false,
+                              isBorder: true,
+                              childContainer: Column(
+                                children: [
+                                  const Icon(
+                                    Icons.attach_money,
+                                    size: 24,
+                                    color: Colors.red,
+                                  ),
+                                  const SizedBox(height: 10),
+                                  const Text(
+                                    "Add Expense",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  const Text("Quick entry"),
+                                ],
                               ),
-                              const SizedBox(height: 10),
-                              const Text(
-                                "Add Expense",
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                              const Text("Quick entry"),
-                            ],
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 20),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        CustomCardContainer(
-                          widthContainer: 150,
-                          cardColor: const Color(0xFFF9FAFB),
-                          isShadow: false,
-                          isBorder: true,
-                          childContainer: Column(
-                            children: [
-                              const Icon(
-                                Icons.attach_money,
-                                size: 20,
-                                color: Colors.red,
+                          InkWell(
+                            onTap: () {},
+                            child: CustomCardContainer(
+                              widthContainer: 170,
+                              cardColor: const Color(0xFFF9FAFB),
+                              isShadow: false,
+                              isBorder: true,
+                              childContainer: Column(
+                                children: [
+                                  const Icon(
+                                    Icons.document_scanner_outlined,
+                                    size: 24,
+                                    color: Colors.green,
+                                  ),
+                                  const SizedBox(height: 10),
+                                  const Text(
+                                    "Scan Receipt",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  const Text("AI powered"),
+                                ],
                               ),
-                              const SizedBox(height: 10),
-                              const Text(
-                                "Add Expense",
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                              const Text("Quick entry"),
-                            ],
+                            ),
                           ),
-                        ),
-                        CustomCardContainer(
-                          widthContainer: 150,
-                          cardColor: const Color(0xFFF9FAFB),
-                          isShadow: false,
-                          isBorder: true,
-                          childContainer: Column(
-                            children: [
-                              const Icon(
-                                Icons.attach_money,
-                                size: 20,
-                                color: Colors.red,
+                        ],
+                      ),
+                      const SizedBox(height: 20),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          InkWell(
+                            onTap: () {},
+                            child: CustomCardContainer(
+                              widthContainer: 170,
+                              cardColor: const Color(0xFFF9FAFB),
+                              isShadow: false,
+                              isBorder: true,
+                              childContainer: Column(
+                                children: [
+                                  const Icon(
+                                    Icons.track_changes_outlined,
+                                    size: 24,
+                                    color: Colors.purple,
+                                  ),
+                                  const SizedBox(height: 10),
+                                  const Text(
+                                    "Add Savings",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  const Text("4 goals"),
+                                ],
                               ),
-                              const SizedBox(height: 10),
-                              const Text(
-                                "Add Expense",
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                              const Text("Quick entry"),
-                            ],
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
+                          InkWell(
+                            onTap: () {},
+                            child: CustomCardContainer(
+                              widthContainer: 170,
+                              cardColor: const Color(0xFFF9FAFB),
+                              isShadow: false,
+                              isBorder: true,
+                              childContainer: Column(
+                                children: [
+                                  const Icon(
+                                    Icons.bar_chart,
+                                    size: 24,
+                                    color: Colors.blue,
+                                  ),
+                                  const SizedBox(height: 10),
+                                  const Text(
+                                    "View Details",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  const Text("Full analysis"),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
-                )
+              ),
+
+              const SizedBox(height: 20),
+
+              // Section Smart Insight
+              CustomCardContainer(
+                childContainer: Container(
+                  padding: const EdgeInsets.all(6),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        "Smart Insight",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+
+                      CustomCardContainer(
+                        isBorder: true,
+                        isShadow: false,
+                        borderColor: Colors.green,
+                        cardColor: Colors.green.withOpacity(0.2),
+                        childContainer: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                const Icon(
+                                  Icons.circle,
+                                  size: 16,
+                                  color: Colors.green,
+                                ),
+                                const SizedBox(width: 15),
+                                const Text(
+                                  "Savings Milestone!",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                const SizedBox(width: 30),
+                                Flexible(
+                                  child: const Text(
+                                    "You've reached 75% of your oooooooosaahdanv asnasfn emergency fund goal! 🎉",
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                const SizedBox(width: 30),
+                                Text(
+                                  "2h ago",
+                                  style: TextStyle(color: Colors.grey),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+
+                      const SizedBox(height: 10),
+
+                      CustomCardContainer(
+                        isBorder: true,
+                        isShadow: false,
+                        borderColor: Colors.amber,
+                        cardColor: Colors.amber.withOpacity(0.2),
+                        childContainer: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                const Icon(
+                                  Icons.circle,
+                                  size: 16,
+                                  color: Colors.amber,
+                                ),
+                                const SizedBox(width: 15),
+                                const Text(
+                                  "Budget Alert",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                const SizedBox(width: 30),
+                                Flexible(
+                                  child: const Text(
+                                    "Food spending is 8% above budget this month",
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                const SizedBox(width: 30),
+                                Text(
+                                  "4h ago",
+                                  style: TextStyle(color: Colors.grey),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+
+                      CustomCardContainer(
+                        isBorder: true,
+                        isShadow: false,
+                        borderColor: const Color.fromARGB(255, 213, 213, 213),
+                        cardColor: Color.fromARGB(255, 213, 213, 213).withOpacity(0.2),
+                        childContainer: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                const Icon(
+                                  Icons.circle,
+                                  size: 16,
+                                  color: Colors.blue,
+                                ),
+                                const SizedBox(width: 15),
+                                const Text(
+                                  "Expense Insight",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 15,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                const SizedBox(width: 30),
+                                Flexible(
+                                  child: const Text(
+                                    "You saved \$50 on transportation this month!",
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      color: Colors.grey,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                const SizedBox(width: 30),
+                                Text(
+                                  "6h ago",
+                                  style: TextStyle(color: Colors.grey),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ],
           ),

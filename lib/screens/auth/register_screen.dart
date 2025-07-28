@@ -1,9 +1,9 @@
 import 'package:financemanager/screens/home/home_screen.dart';
 import 'package:financemanager/screens/auth/login_screen.dart';
 import 'package:financemanager/services/auth_services.dart';
-import 'package:financemanager/widgets/custom_button.dart';
-import 'package:financemanager/widgets/custom_snackbar.dart';
-import 'package:financemanager/widgets/custom_textField.dart';
+import 'package:financemanager/widgets/custom/custom_button.dart';
+import 'package:financemanager/widgets/custom/custom_snackbar.dart';
+import 'package:financemanager/widgets/custom/custom_textField.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 

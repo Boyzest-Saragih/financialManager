@@ -6,13 +6,15 @@ class CustomCardContainer extends StatelessWidget {
   final double? widthContainer;
   final bool isShadow;
   final bool isBorder;
+  final Color borderColor;
   const CustomCardContainer({
     super.key,
     required this.childContainer,
     this.cardColor = Colors.white,
     this.widthContainer,
     this.isShadow = true,
-    this.isBorder = false
+    this.isBorder = false,
+    this.borderColor = Colors.grey,
   });
 
   @override
@@ -23,7 +25,7 @@ class CustomCardContainer extends StatelessWidget {
       decoration: BoxDecoration(
         color: cardColor,
         borderRadius: BorderRadius.circular(15),
-        border: isBorder?Border.all(width: 1, color: Colors.grey.withOpacity(0.5)):Border(),
+        border: isBorder?Border.all(width: 1, color:borderColor.withOpacity(0.5)) :Border(),
         boxShadow: [
           BoxShadow(
             color: isShadow?Colors.black.withOpacity(0.2):Colors.black.withOpacity(0.01),
