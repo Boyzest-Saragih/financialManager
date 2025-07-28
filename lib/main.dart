@@ -1,10 +1,9 @@
 import 'package:financemanager/firebase_options.dart';
-import 'package:financemanager/screens/auth/register_screen.dart';
+import 'package:financemanager/screens/drawer_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:financemanager/screens/home/home_screen.dart';
 import 'package:flutter/material.dart';
 
-void main() async{
+void main() async {
   // WidgetsFlutterBinding.ensureInitialized();
   // await Firebase.initializeApp(
   //   options: DefaultFirebaseOptions.currentPlatform
@@ -21,9 +20,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'FinTrack',
       theme: ThemeData(
-        primaryColor: const Color(0xF9FAFB),
+        scaffoldBackgroundColor: Colors.grey.shade100,
+        primaryColor: const Color(0xFFF9FAFB),
       ),
-      home: HomeScreen(),
+      home: DrawerScreen(),
     );
   }
 }
