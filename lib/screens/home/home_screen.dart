@@ -86,7 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   Container(
                     padding: EdgeInsets.all(12),
-                    width: 200,
+                    width: 185,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(15),
@@ -148,7 +148,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   Container(
                     padding: EdgeInsets.all(12),
-                    width: 200,
+                    width: 185,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(15),
