@@ -3,7 +3,7 @@ import 'package:financemanager/widgets/custom/custom_card_container.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:fl_chart/fl_chart.dart';
-import '../../widgets/custom_chart/line_chart.dart';
+import '../../widgets/custom_chart/line_chart_net_income.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

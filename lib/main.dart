@@ -1,5 +1,6 @@
 import 'package:financemanager/firebase_options.dart';
 import 'package:financemanager/screens/drawer_screen.dart';
+import 'package:financemanager/screens/setupProfile/profile_setup_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.grey.shade100,
         primaryColor: const Color(0xFFF9FAFB),
       ),
-      home: DrawerScreen(),
+      home: ProfileSetupScreen(),
     );
   }
 }
