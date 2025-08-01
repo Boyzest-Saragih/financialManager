@@ -1,66 +1,39 @@
-import 'package:financemanager/screens/setupProfile/setup_screen_contract.dart';
-import 'package:financemanager/widgets/custom/custom_card_container.dart';
-import 'package:financemanager/widgets/custom/custom_snackbar.dart';
-import 'package:financemanager/widgets/custom/custom_textField.dart';
+import 'package:financemanager/providers/profile_setup_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:financemanager/widgets/custom/custom_card_container.dart';
+import 'package:financemanager/widgets/custom/custom_textField.dart';
 
-class CurrentBalanceInput extends StatefulWidget
-    implements SetupScreenContract {
+class CurrentBalanceInput extends StatefulWidget {
   const CurrentBalanceInput({super.key});
 
   @override
   State<CurrentBalanceInput> createState() => _CurrentBalanceInputState();
-
-  @override
-  Widget buildPage(BuildContext context) => this;
-
-  @override
-  OnContinueCallback getOnContinueCallback(BuildContext context) {
-    // TODO: implement getOnContinueCallback
-    return () async {
-      final _CurrentBalanceInputState? state =
-          context.findAncestorStateOfType<_CurrentBalanceInputState>();
-
-      if (state != null) {
-        if (state.currBalance.isEmpty || state.monthlyIncome.isEmpty) {
-          print("ISI VAR KSOSNG");
-          ScaffoldMessenger.of(context).showSnackBar(
-            CustomSnackBar(
-              message: "Tolong semua field di isi",
-              backgroundColor: Colors.red,
-            ),
-          );
-          return false;
-        }
-        print("${state.currBalance} & ${state.monthlyIncome}");
-        return true;
-      }
-      print("ISI state KSOSNG");
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        CustomSnackBar(
-          message: "Tolong semua field di isi",
-          backgroundColor: Colors.red,
-        ),
-      );
-      return false;
-    };
-  }
-
-  @override
-  OnBackCallback? getOnBackCallback(BuildContext context)=>null;
 }
 
 class _CurrentBalanceInputState extends State<CurrentBalanceInput> {
-  TextEditingController _currBalanceCtr = TextEditingController();
-  TextEditingController _monthlyIncomeCtr = TextEditingController();
+  final TextEditingController _currBalanceCtr = TextEditingController();
+  final TextEditingController _monthlyIncomeCtr = TextEditingController();
 
-  late String currBalance = '';
-  late String monthlyIncome = '';
-  
+  @override
+  void initState() {
+    super.initState();
+    final provider = context.read<ProfileSetupProvider>();
+    _currBalanceCtr.text = provider.currentBalance;
+    _monthlyIncomeCtr.text = provider.monthlyIncome;
+  }
+
+  @override
+  void dispose() {
+    _currBalanceCtr.dispose();
+    _monthlyIncomeCtr.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
+    final setupFlowProvider = context.read<ProfileSetupProvider>();
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -69,17 +42,15 @@ class _CurrentBalanceInputState extends State<CurrentBalanceInput> {
           isBorder: false,
           isShadow: false,
           cardColor: Colors.blue,
-          childContainer: Icon(
+          childContainer: const Icon(
             Icons.attach_money,
             color: Colors.white,
             size: 36,
           ),
         ),
-
         const SizedBox(height: 10),
-
         const Text(
-          "We need your data current financial overview",
+          "We need your current financial overview",
           textAlign: TextAlign.center,
           style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
         ),
@@ -90,10 +61,10 @@ class _CurrentBalanceInputState extends State<CurrentBalanceInput> {
           judul: "Current Balance",
           isNumber: true,
           onChangedField: (value) {
-            setState(() {
-              currBalance = value;
-              print(currBalance);
-            });
+            setupFlowProvider.updateCurrentBalanceInput(
+              balance: value,
+              income: _monthlyIncomeCtr.text,
+            );
           },
         ),
         const SizedBox(height: 20),
@@ -103,9 +74,10 @@ class _CurrentBalanceInputState extends State<CurrentBalanceInput> {
           judul: "Monthly Income",
           isNumber: true,
           onChangedField: (value) {
-            setState(() {
-              monthlyIncome = value;
-            });
+            setupFlowProvider.updateCurrentBalanceInput(
+              balance: _currBalanceCtr.text,
+              income: value,
+            );
           },
         ),
       ],
