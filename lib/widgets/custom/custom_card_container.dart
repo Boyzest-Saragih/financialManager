@@ -7,6 +7,7 @@ class CustomCardContainer extends StatelessWidget {
   final bool isShadow;
   final bool isBorder;
   final Color borderColor;
+  final VoidCallback? onTapCard;
   const CustomCardContainer({
     super.key,
     required this.childContainer,
@@ -15,11 +16,14 @@ class CustomCardContainer extends StatelessWidget {
     this.isShadow = true,
     this.isBorder = false,
     this.borderColor = Colors.grey,
+    this.onTapCard
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return InkWell(
+      onTap: onTapCard,
+      child: Container(
       padding: EdgeInsets.all(12),
       width: widthContainer,
       decoration: BoxDecoration(
@@ -36,6 +40,7 @@ class CustomCardContainer extends StatelessWidget {
         ],
       ),
       child: childContainer,
+    )
     );
   }
 }

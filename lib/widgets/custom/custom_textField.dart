@@ -4,12 +4,18 @@ class CustomTextField extends StatefulWidget {
   final TextEditingController controller;
   final String hint;
   final bool obscure;
+  final String judul;
+  final bool isNumber;
+  final ValueChanged? onChangedField;
 
   const CustomTextField({
     super.key,
     required this.controller,
     required this.hint,
     this.obscure = false,
+    this.judul = '',
+    this.isNumber = false,
+    this.onChangedField
   });
 
   @override
@@ -26,31 +32,43 @@ class _CustomTextFieldState extends State<CustomTextField> {
   }
 
   @override
-  Widget build(BuildContext context) => SizedBox(
-        height: 40,
-        child: TextField(
+  Widget build(BuildContext context) => 
+    Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(widget.judul, style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),),
+        const SizedBox(height: 10,),
+        TextField(
+          onChanged: widget.onChangedField,
+          keyboardType: widget.isNumber?TextInputType.number:TextInputType.text,
           controller: widget.controller,
           obscureText: _isObscured,
           decoration: InputDecoration(
+            hintStyle: TextStyle(color: Colors.grey),
             hintText: widget.hint,
-            contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 12,
+              vertical: 12,
+            ),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
               borderSide: const BorderSide(color: Colors.grey),
             ),
-            suffixIcon: widget.obscure
-                ? IconButton(
-                    icon: Icon(
-                      _isObscured ? Icons.visibility_off : Icons.visibility,
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        _isObscured = !_isObscured;
-                      });
-                    },
-                  )
-                : null,
+            suffixIcon:
+                widget.obscure
+                    ? IconButton(
+                      icon: Icon(
+                        _isObscured ? Icons.visibility_off : Icons.visibility,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _isObscured = !_isObscured;
+                        });
+                      },
+                    )
+                    : null,
           ),
         ),
-      );
+      ],
+  );
 }
