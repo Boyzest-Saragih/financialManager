@@ -1,4 +1,5 @@
 import 'package:financemanager/providers/profile_setup_provider.dart';
+import 'package:financemanager/screens/setupProfile/monthly_expenses_input.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:financemanager/widgets/custom/custom_card_container.dart';
@@ -14,6 +15,7 @@ class ProfileSetupScreen extends StatefulWidget {
 
 class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
   final List<Widget> _setupPages = [
+    const MonthlyExpensesInput(),
     const CurrentBalanceInput(),
     const Text("Halaman Kedua: Informasi Pribadi (placeholder)"),
     const Text("Halaman Ketiga: Tujuan Anggaran (placeholder)"),
@@ -72,15 +74,13 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
                       disabledThumbRadius: 0,
                     ),
                     overlayShape: SliderComponentShape.noOverlay,
-                    activeTrackColor: Colors.blue,
-                    inactiveTrackColor: Colors.grey[300],
                   ),
                   child: Slider(
+                    activeColor: Colors.blue,
                     value: currentStep.toDouble(),
                     min: 0,
                     max: _setupPages.length.toDouble(),
-
-                    onChanged: null,
+                    onChanged: (v){},
                   ),
                 ),
               ],
@@ -90,7 +90,7 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
           Expanded(
             child: Container(
               height: double.infinity,
-              padding: const EdgeInsets.all(4),
+              padding: const EdgeInsets.all(10),
               child: currentPage,
             ),
           ),
