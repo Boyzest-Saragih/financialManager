@@ -19,9 +19,6 @@ class ProfileSetupProvider extends ChangeNotifier {
 
   bool validateCurrBalanceInput(BuildContext context) {
     if (_currentBalance.isEmpty || _monthlyIncome.isEmpty) {
-      // ScaffoldMessenger.of(
-      //   context,
-      // ).showSnackBar(CustomSnackBar(message: "Plis di isi wak"));
       return false;
     }
     return true;
