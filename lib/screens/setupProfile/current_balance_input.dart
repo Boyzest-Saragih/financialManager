@@ -1,6 +1,6 @@
 import 'package:financemanager/providers/profile_setup_provider.dart';
-import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter/material.dart';
 import 'package:financemanager/widgets/custom/custom_card_container.dart';
 import 'package:financemanager/widgets/custom/custom_textField.dart';
 

@@ -15,8 +15,8 @@ class ProfileSetupScreen extends StatefulWidget {
 
 class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
   final List<Widget> _setupPages = [
-    const MonthlyExpensesInput(),
     const CurrentBalanceInput(),
+    const MonthlyExpensesInput(),
     const Text("Halaman Kedua: Informasi Pribadi (placeholder)"),
     const Text("Halaman Ketiga: Tujuan Anggaran (placeholder)"),
     const Text("Halaman Keempat: Tinjau & Konfirmasi (placeholder)"),

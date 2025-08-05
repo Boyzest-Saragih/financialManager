@@ -5,13 +5,21 @@ class ProfileSetupProvider extends ChangeNotifier {
   int _currentStep = 1;
   int get currentStep => _currentStep;
 
+  // data step 1
   String _currentBalance = '';
   String _monthlyIncome = '';
-
   String get currentBalance => _currentBalance;
   String get monthlyIncome => _monthlyIncome;
 
-  void updateCurrentBalanceInput({required String balance, required String income}) {
+  // data step 2
+  Map<String, int> _monthlyExpense = {};
+  Map<String, int> get monthlyExpense => _monthlyExpense;
+
+  // Method step 1
+  void updateCurrentBalanceInput({
+    required String balance,
+    required String income,
+  }) {
     _currentBalance = balance;
     _monthlyIncome = income;
     notifyListeners();
@@ -24,22 +32,42 @@ class ProfileSetupProvider extends ChangeNotifier {
     return true;
   }
 
-  Future <bool> continueStep (BuildContext context, int totalSteps) async {
+  // Method step 2
+  void updateMonthlyExpenseInput({
+    required Map<String, int> valueMonthlyExpense,
+    required int fieldLength,
+  }) {
+    if (valueMonthlyExpense.length == fieldLength) {
+      _monthlyExpense = valueMonthlyExpense;
+    } else {
+      _monthlyExpense = {};
+    }
+    notifyListeners();
+  }
+
+  bool validateMonthlyExpenseInput() {
+    if (_monthlyExpense.isEmpty) {
+      return false;
+    }
+    print(monthlyExpense);
+    return true;
+  }
+
+  Future<bool> continueStep(BuildContext context, int totalSteps) async {
     bool isValid = false;
 
-    if (_currentStep ==1) {
+    if (_currentStep == 1) {
       isValid = validateCurrBalanceInput(context);
+    } else if (_currentStep == 2) {
+      isValid = validateMonthlyExpenseInput();
     }
-    // else if(_currentStep ==2){
-    //   // todo
-    // }
 
-    if(isValid){
-      if(_currentStep < totalSteps){
+    if (isValid) {
+      if (_currentStep < totalSteps) {
         _currentStep++;
         notifyListeners();
         return true;
-      }else{
+      } else {
         print("Setup finish");
         return true;
       }

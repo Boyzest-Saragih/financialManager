@@ -1,3 +1,5 @@
+import 'package:financemanager/providers/profile_setup_provider.dart';
+import 'package:provider/provider.dart';
 import 'package:financemanager/widgets/custom/custom_card_container.dart';
 import 'package:financemanager/widgets/custom/custom_textField.dart';
 import 'package:flutter/material.dart';
@@ -60,9 +62,10 @@ class _MonthlyExpensesInputState extends State<MonthlyExpensesInput> {
       TextEditingController(),
     ],
   ];
-  final Map<String, int> listField = {};
+  Map<String, int> listField = {};
 
   List<Widget> _buildCardExpensesInput() {
+    final setupFlowProvider = context.read<ProfileSetupProvider>();
     final List<Widget> expenseWidget = [];
 
     for (var i = 0; i < _listContentField.length; i++) {
@@ -110,12 +113,18 @@ class _MonthlyExpensesInputState extends State<MonthlyExpensesInput> {
                     controller: _listContentField[i][3],
                     hint: "0",
                     onChangedField: (v) {
+                      final provider = context.read<ProfileSetupProvider>();
                       setState(() {
-                        final List<String> keyTmp = _listContentField[i][1].toString().split(" ");
-                        final String tmp =  keyTmp[0];
-                      listField.addAll({tmp.toLowerCase(): int.parse(v)});
-                        
+                        final List<String> keyTmp = _listContentField[i][1]
+                            .toString()
+                            .split(" ");
+                        final String tmp = keyTmp[0];
+                        listField.addAll({tmp.toLowerCase(): int.parse(v)});
                       });
+                      setupFlowProvider.updateMonthlyExpenseInput(
+                        valueMonthlyExpense: listField,
+                        fieldLength: _listContentField.length,
+                      );
                     },
                   ),
                 ],
@@ -126,14 +135,11 @@ class _MonthlyExpensesInputState extends State<MonthlyExpensesInput> {
         ),
       );
     }
-    print(listField);
     return expenseWidget;
   }
 
   @override
   Widget build(BuildContext context) {
-    print(listField);
-
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
