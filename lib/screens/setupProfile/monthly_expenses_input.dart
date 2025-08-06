@@ -19,48 +19,48 @@ class _MonthlyExpensesInputState extends State<MonthlyExpensesInput> {
       "desc": "Rent, mortgage, utilities",
       "valueExpense": TextEditingController(),
     },
-    // {
-    //   "icon": Icon(Icons.dining, size: 30, color: Colors.white),
-    //   "title": 'Food & Dining',
-    //   "desc": "Groceries, restaurants",
-    //   "valueExpense": TextEditingController(),
-    // },
-    // {
-    //   "icon": Icon(Icons.car_crash, size: 30, color: Colors.white),
-    //   "title": 'Transportation',
-    //   "desc": "Gas, car payments, transit",
-    //   "valueExpense": TextEditingController(),
-    // },
-    // {
-    //   "icon": Icon(Icons.gamepad, size: 30, color: Colors.white),
-    //   "title": 'Entertainment',
-    //   "desc": "Movies, games, hobbies",
-    //   "valueExpense": TextEditingController(),
-    // },
-    // {
-    //   "icon": Icon(Icons.shop, size: 30, color: Colors.white),
-    //   "title": 'Shopping',
-    //   "desc": "Clothes, electronics, misc",
-    //   "valueExpense": TextEditingController(),
-    // },
-    // {
-    //   "icon": Icon(Icons.heart_broken, size: 30, color: Colors.white),
-    //   "title": 'Health & Fitness',
-    //   "desc": "Gym, healthcare, supplements",
-    //   "valueExpense": TextEditingController(),
-    // },
-    // {
-    //   "icon": Icon(Icons.trending_up, size: 30, color: Colors.white),
-    //   "title": 'Subscriptions',
-    //   "desc": "Netflix, Spotify, software",
-    //   "valueExpense": TextEditingController(),
-    // },
-    // {
-    //   "icon": Icon(Icons.attach_money, size: 30, color: Colors.white),
-    //   "title": 'Others',
-    //   "desc": "Miscellaneous expensess",
-    //   "valueExpense": TextEditingController(),
-    // },
+    {
+      "icon": Icon(Icons.dining, size: 30, color: Colors.white),
+      "title": 'Food & Dining',
+      "desc": "Groceries, restaurants",
+      "valueExpense": TextEditingController(),
+    },
+    {
+      "icon": Icon(Icons.car_crash, size: 30, color: Colors.white),
+      "title": 'Transportation',
+      "desc": "Gas, car payments, transit",
+      "valueExpense": TextEditingController(),
+    },
+    {
+      "icon": Icon(Icons.gamepad, size: 30, color: Colors.white),
+      "title": 'Entertainment',
+      "desc": "Movies, games, hobbies",
+      "valueExpense": TextEditingController(),
+    },
+    {
+      "icon": Icon(Icons.shop, size: 30, color: Colors.white),
+      "title": 'Shopping',
+      "desc": "Clothes, electronics, misc",
+      "valueExpense": TextEditingController(),
+    },
+    {
+      "icon": Icon(Icons.heart_broken, size: 30, color: Colors.white),
+      "title": 'Health & Fitness',
+      "desc": "Gym, healthcare, supplements",
+      "valueExpense": TextEditingController(),
+    },
+    {
+      "icon": Icon(Icons.trending_up, size: 30, color: Colors.white),
+      "title": 'Subscriptions',
+      "desc": "Netflix, Spotify, software",
+      "valueExpense": TextEditingController(),
+    },
+    {
+      "icon": Icon(Icons.attach_money, size: 30, color: Colors.white),
+      "title": 'Others',
+      "desc": "Miscellaneous expensess",
+      "valueExpense": TextEditingController(),
+    },
   ];
 
   List<Map<String, dynamic>> _buildMonthlyExpensesDataList() {
