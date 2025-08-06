@@ -12,8 +12,12 @@ class ProfileSetupProvider extends ChangeNotifier {
   String get monthlyIncome => _monthlyIncome;
 
   // data step 2
-  Map<String, int> _monthlyExpense = {};
-  Map<String, int> get monthlyExpense => _monthlyExpense;
+  List<Map<String, dynamic>> _monthlyExpense = [];
+  List<Map<String, dynamic>> get monthlyExpense => _monthlyExpense;
+
+  // data step 3
+  List<Map<String, dynamic>> _savingsGoals = [];
+  List<Map<String, dynamic>> get savingsGoals => _savingsGoals;
 
   // Method step 1
   void updateCurrentBalanceInput({
@@ -34,23 +38,31 @@ class ProfileSetupProvider extends ChangeNotifier {
 
   // Method step 2
   void updateMonthlyExpenseInput({
-    required Map<String, int> valueMonthlyExpense,
-    required int fieldLength,
+    required List<Map<String, dynamic>> monthlyExpenseData,
   }) {
-    if (valueMonthlyExpense.length == fieldLength) {
-      _monthlyExpense = valueMonthlyExpense;
-    } else {
-      _monthlyExpense = {};
-    }
+    _monthlyExpense = monthlyExpenseData;
+
     notifyListeners();
   }
 
   bool validateMonthlyExpenseInput() {
-    if (_monthlyExpense.isEmpty) {
-      return false;
-    }
-    print(monthlyExpense);
-    return true;
+    return _monthlyExpense.isNotEmpty &&
+      _monthlyExpense.every((expense) => (expense['valueExpense'] as int) > 0);
+  }
+
+  // Method step 3
+  void updateSavingsGoals({
+    required List<Map<String, dynamic>> savingsGoalsData,
+  }) {
+    _savingsGoals = savingsGoalsData;
+    notifyListeners();
+  }
+
+  bool validateSavingsGoalsInput() {
+    return _savingsGoals.isNotEmpty &&
+        _savingsGoals.every(
+          (goal) => goal['judul'].isNotEmpty && goal['target_amount'] > 0,
+        );
   }
 
   Future<bool> continueStep(BuildContext context, int totalSteps) async {
@@ -60,8 +72,13 @@ class ProfileSetupProvider extends ChangeNotifier {
       isValid = validateCurrBalanceInput(context);
     } else if (_currentStep == 2) {
       isValid = validateMonthlyExpenseInput();
+    } else if (_currentStep == 3) {
+      isValid = validateSavingsGoalsInput();
+    }else if(_currentStep == 4){
+      isValid = true;
     }
 
+      print("${_currentStep+1} < ${totalSteps}");
     if (isValid) {
       if (_currentStep < totalSteps) {
         _currentStep++;

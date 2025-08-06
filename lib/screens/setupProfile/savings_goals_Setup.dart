@@ -25,22 +25,21 @@ class _SavingsGoalsSetupState extends State<SavingsGoalsSetup> {
     },
   ];
 
-  final List<Map<String, dynamic>> listFieldSavingsGoals = [];
-
-  @override
-  void initState() {
-    super.initState();
-    for (var goal in _savingsGoals) {
-      listFieldSavingsGoals.add({
+  // Helper method untuk mengonversi controllers ke data
+  List<Map<String, dynamic>> _buildSavingsGoalsDataList() {
+    return _savingsGoals.map((goal) {
+      return {
         "judul": goal["judul"]!.text,
         "target_amount": int.tryParse(goal["target_amount"]!.text) ?? 0,
         "desc": goal["desc"]!.text,
-      });
-    }
+      };
+    }).toList();
   }
 
+  // Helper method untuk membangun UI input
   List<Widget> _buildCardSavingsGoalsInput() {
     final List<Widget> savingItemsWidget = [];
+    final setupFlowProvider = context.read<ProfileSetupProvider>();
 
     for (var i = 0; i < _savingsGoals.length; i++) {
       savingItemsWidget.add(
@@ -54,7 +53,9 @@ class _SavingsGoalsSetupState extends State<SavingsGoalsSetup> {
                     fillColor: const Color.fromARGB(255, 233, 233, 235),
                     controller: _savingsGoals[i]["judul"],
                     onChangedField: (v) {
-                      listFieldSavingsGoals[i]["judul"] = v.toString();
+                      setupFlowProvider.updateSavingsGoals(
+                        savingsGoalsData: _buildSavingsGoalsDataList(),
+                      );
                     },
                   ),
                   const SizedBox(height: 8),
@@ -65,8 +66,9 @@ class _SavingsGoalsSetupState extends State<SavingsGoalsSetup> {
                     controller: _savingsGoals[i]["target_amount"],
                     hint: "Target amount",
                     onChangedField: (v) {
-                      listFieldSavingsGoals[i]["target_amount"] =
-                          int.tryParse(v) ?? 0;
+                      setupFlowProvider.updateSavingsGoals(
+                        savingsGoalsData: _buildSavingsGoalsDataList(),
+                      );
                     },
                   ),
                   const SizedBox(height: 8),
@@ -75,7 +77,9 @@ class _SavingsGoalsSetupState extends State<SavingsGoalsSetup> {
                     fillColor: const Color.fromARGB(255, 233, 233, 235),
                     controller: _savingsGoals[i]["desc"],
                     onChangedField: (v) {
-                      listFieldSavingsGoals[i]["desc"] = v.toString();
+                      setupFlowProvider.updateSavingsGoals(
+                        savingsGoalsData: _buildSavingsGoalsDataList(),
+                      );
                     },
                   ),
                 ],
@@ -98,17 +102,19 @@ class _SavingsGoalsSetupState extends State<SavingsGoalsSetup> {
         "desc": TextEditingController(text: "description"),
       });
     });
+
+    context.read<ProfileSetupProvider>().updateSavingsGoals(
+      savingsGoalsData: _buildSavingsGoalsDataList(),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    print("Final List: $listFieldSavingsGoals");
-
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
           alignment: Alignment.center,
-          padding: EdgeInsets.all(8),
+          padding: const EdgeInsets.all(8),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,

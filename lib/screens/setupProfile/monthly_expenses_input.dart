@@ -12,63 +12,71 @@ class MonthlyExpensesInput extends StatefulWidget {
 }
 
 class _MonthlyExpensesInputState extends State<MonthlyExpensesInput> {
-  final List<List<dynamic>> _listContentField = [
-    [
-      Icon(Icons.house, size: 30, color: Colors.white),
-      'Housing',
-      "Rent, mortgage, utilities",
-      TextEditingController(),
-    ],
-    [
-      Icon(Icons.dining, size: 30, color: Colors.white),
-      'Food & Dining',
-      "Groceries, restaurants",
-      TextEditingController(),
-    ],
-    [
-      Icon(Icons.car_crash, size: 30, color: Colors.white),
-      'Transportation',
-      "Gas, car payments, transit",
-      TextEditingController(),
-    ],
-    [
-      Icon(Icons.gamepad, size: 30, color: Colors.white),
-      'Entertainment',
-      "Movies, games, hobbies",
-      TextEditingController(),
-    ],
-    [
-      Icon(Icons.shop, size: 30, color: Colors.white),
-      'Shopping',
-      "Clothes, electronics, misc",
-      TextEditingController(),
-    ],
-    [
-      Icon(Icons.heart_broken, size: 30, color: Colors.white),
-      'Health & Fitness',
-      "Gym, healthcare, supplements",
-      TextEditingController(),
-    ],
-    [
-      Icon(Icons.trending_up, size: 30, color: Colors.white),
-      'Subscriptions',
-      "Netflix, Spotify, software",
-      TextEditingController(),
-    ],
-    [
-      Icon(Icons.attach_money, size: 30, color: Colors.white),
-      'Others',
-      "Miscellaneous expensess",
-      TextEditingController(),
-    ],
+  final List<Map<String, dynamic>> _monthlyExpenses = [
+    {
+      "icon": Icon(Icons.house, size: 30, color: Colors.white),
+      "title": 'Housing',
+      "desc": "Rent, mortgage, utilities",
+      "valueExpense": TextEditingController(),
+    },
+    // {
+    //   "icon": Icon(Icons.dining, size: 30, color: Colors.white),
+    //   "title": 'Food & Dining',
+    //   "desc": "Groceries, restaurants",
+    //   "valueExpense": TextEditingController(),
+    // },
+    // {
+    //   "icon": Icon(Icons.car_crash, size: 30, color: Colors.white),
+    //   "title": 'Transportation',
+    //   "desc": "Gas, car payments, transit",
+    //   "valueExpense": TextEditingController(),
+    // },
+    // {
+    //   "icon": Icon(Icons.gamepad, size: 30, color: Colors.white),
+    //   "title": 'Entertainment',
+    //   "desc": "Movies, games, hobbies",
+    //   "valueExpense": TextEditingController(),
+    // },
+    // {
+    //   "icon": Icon(Icons.shop, size: 30, color: Colors.white),
+    //   "title": 'Shopping',
+    //   "desc": "Clothes, electronics, misc",
+    //   "valueExpense": TextEditingController(),
+    // },
+    // {
+    //   "icon": Icon(Icons.heart_broken, size: 30, color: Colors.white),
+    //   "title": 'Health & Fitness',
+    //   "desc": "Gym, healthcare, supplements",
+    //   "valueExpense": TextEditingController(),
+    // },
+    // {
+    //   "icon": Icon(Icons.trending_up, size: 30, color: Colors.white),
+    //   "title": 'Subscriptions',
+    //   "desc": "Netflix, Spotify, software",
+    //   "valueExpense": TextEditingController(),
+    // },
+    // {
+    //   "icon": Icon(Icons.attach_money, size: 30, color: Colors.white),
+    //   "title": 'Others',
+    //   "desc": "Miscellaneous expensess",
+    //   "valueExpense": TextEditingController(),
+    // },
   ];
-  Map<String, int> listField = {};
+
+  List<Map<String, dynamic>> _buildMonthlyExpensesDataList() {
+    return _monthlyExpenses.map((expense) {
+      return {
+        "title": expense['title'],
+        "desc": expense['desc'],
+        "valueExpense": int.tryParse(expense["valueExpense"]!.text) ?? 0,
+      };
+    }).toList();
+  }
 
   List<Widget> _buildCardExpensesInput() {
-    final setupFlowProvider = context.read<ProfileSetupProvider>();
     final List<Widget> expenseWidget = [];
 
-    for (var i = 0; i < _listContentField.length; i++) {
+    for (var i = 0; i < _monthlyExpenses.length; i++) {
       expenseWidget.add(
         Column(
           children: [
@@ -83,7 +91,7 @@ class _MonthlyExpensesInputState extends State<MonthlyExpensesInput> {
                         isShadow: false,
                         padding: 8,
                         cardColor: Colors.lightBlue,
-                        childContainer: _listContentField[i][0],
+                        childContainer: _monthlyExpenses[i]["icon"],
                       ),
 
                       const SizedBox(width: 12),
@@ -91,14 +99,14 @@ class _MonthlyExpensesInputState extends State<MonthlyExpensesInput> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            _listContentField[i][1],
+                            _monthlyExpenses[i]["title"],
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
                           Text(
-                            _listContentField[i][2],
+                            _monthlyExpenses[i]["desc"],
                             style: TextStyle(fontSize: 16, color: Colors.grey),
                           ),
                         ],
@@ -110,22 +118,9 @@ class _MonthlyExpensesInputState extends State<MonthlyExpensesInput> {
 
                   CustomTextField(
                     isNumber: true,
-                    controller: _listContentField[i][3],
-                    hint: "0",
-                    onChangedField: (v) {
-                      final provider = context.read<ProfileSetupProvider>();
-                      setState(() {
-                        final List<String> keyTmp = _listContentField[i][1]
-                            .toString()
-                            .split(" ");
-                        final String tmp = keyTmp[0];
-                        listField.addAll({tmp.toLowerCase(): int.parse(v)});
-                      });
-                      setupFlowProvider.updateMonthlyExpenseInput(
-                        valueMonthlyExpense: listField,
-                        fieldLength: _listContentField.length,
-                      );
-                    },
+                    hint: "amount",
+                    controller: _monthlyExpenses[i]["valueExpense"],
+                    focusNode: _focusNodes[i],
                   ),
                 ],
               ),
@@ -136,6 +131,24 @@ class _MonthlyExpensesInputState extends State<MonthlyExpensesInput> {
       );
     }
     return expenseWidget;
+  }
+
+  final List<FocusNode> _focusNodes = [];
+
+  @override
+  void initState() {
+    super.initState();
+    for (var i = 0; i < _monthlyExpenses.length; i++) {
+      _focusNodes.add(FocusNode());
+      _focusNodes[i].addListener(() {
+        if (!_focusNodes[i].hasFocus) {
+          final updatedExpenses = _buildMonthlyExpensesDataList();
+          context.read<ProfileSetupProvider>().updateMonthlyExpenseInput(
+            monthlyExpenseData: updatedExpenses,
+          );
+        }
+      });
+    }
   }
 
   @override

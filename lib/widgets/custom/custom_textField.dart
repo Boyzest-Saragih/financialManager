@@ -9,7 +9,8 @@ class CustomTextField extends StatefulWidget {
   final ValueChanged? onChangedField;
   final bool isBorder;
   final Color? borderColor;
-  final Color? fillColor; 
+  final Color? fillColor;
+  final FocusNode? focusNode; // ✅ Tambahan
 
   const CustomTextField({
     super.key,
@@ -22,8 +23,8 @@ class CustomTextField extends StatefulWidget {
     this.isBorder = true,
     this.borderColor,
     this.fillColor,
+    this.focusNode, // ✅ Tambahan
   });
-
 
   @override
   State<CustomTextField> createState() => _CustomTextFieldState();
@@ -50,6 +51,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
             const SizedBox(height: 10),
           ],
           TextField(
+            focusNode: widget.focusNode, // ✅ Tambahan
             onChanged: widget.onChangedField,
             keyboardType:
                 widget.isNumber ? TextInputType.number : TextInputType.text,
@@ -62,7 +64,6 @@ class _CustomTextFieldState extends State<CustomTextField> {
                 horizontal: 12,
                 vertical: 12,
               ),
-              // Add fillColor and filled properties
               filled: widget.fillColor != null,
               fillColor: widget.fillColor,
               border: widget.isBorder
@@ -77,7 +78,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
                   ? OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                       borderSide: BorderSide(
-                        color: widget.borderColor ?? Theme.of(context).primaryColor,
+                        color:
+                            widget.borderColor ?? Theme.of(context).primaryColor,
                       ),
                     )
                   : InputBorder.none,

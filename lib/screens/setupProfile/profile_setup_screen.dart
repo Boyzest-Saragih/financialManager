@@ -31,8 +31,6 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
     final int clampedIndex = (currentStep - 1).clamp(0, _setupPages.length - 1);
     final Widget currentPage = _setupPages[clampedIndex];
 
-print(currentStep);
-print(_setupPages.length);
     return Scaffold(
       body: Column(
         children: [
@@ -64,7 +62,7 @@ print(_setupPages.length);
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Text(
-                        "Step ${currentStep!} of ${_setupPages.length}",
+                        "Step $currentStep of ${_setupPages.length}",
                       ),
                     ),
                   ],
