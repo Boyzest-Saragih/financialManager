@@ -12,8 +12,6 @@ class SavingsGoalsSetup extends StatefulWidget {
 }
 
 class _SavingsGoalsSetupState extends State<SavingsGoalsSetup> {
-  // Gunakan list Map untuk data awal
-  // Ini lebih mudah dikelola daripada List<List<dynamic>>
   final List<Map<String, dynamic>> _savingsGoals = [
     {
       "judul": TextEditingController(text: "Emergency Fund"),
@@ -27,13 +25,11 @@ class _SavingsGoalsSetupState extends State<SavingsGoalsSetup> {
     },
   ];
 
-  // List ini akan menyimpan data akhir setelah diubah oleh user
   final List<Map<String, dynamic>> listFieldSavingsGoals = [];
 
   @override
   void initState() {
     super.initState();
-    // Inisialisasi listFieldSavingsGoals dengan data dari _savingsGoals
     for (var goal in _savingsGoals) {
       listFieldSavingsGoals.add({
         "judul": goal["judul"]!.text,
@@ -54,6 +50,8 @@ class _SavingsGoalsSetupState extends State<SavingsGoalsSetup> {
               childContainer: Column(
                 children: [
                   CustomTextField(
+                    borderColor: const Color.fromARGB(255, 233, 233, 235),
+                    fillColor: const Color.fromARGB(255, 233, 233, 235),
                     controller: _savingsGoals[i]["judul"],
                     onChangedField: (v) {
                       listFieldSavingsGoals[i]["judul"] = v.toString();
@@ -61,14 +59,20 @@ class _SavingsGoalsSetupState extends State<SavingsGoalsSetup> {
                   ),
                   const SizedBox(height: 8),
                   CustomTextField(
+                    borderColor: const Color.fromARGB(255, 233, 233, 235),
+                    fillColor: const Color.fromARGB(255, 233, 233, 235),
+                    isNumber: true,
                     controller: _savingsGoals[i]["target_amount"],
                     hint: "Target amount",
                     onChangedField: (v) {
-                      listFieldSavingsGoals[i]["target_amount"] = int.tryParse(v) ?? 0;
+                      listFieldSavingsGoals[i]["target_amount"] =
+                          int.tryParse(v) ?? 0;
                     },
                   ),
                   const SizedBox(height: 8),
                   CustomTextField(
+                    borderColor: const Color.fromARGB(255, 233, 233, 235),
+                    fillColor: const Color.fromARGB(255, 233, 233, 235),
                     controller: _savingsGoals[i]["desc"],
                     onChangedField: (v) {
                       listFieldSavingsGoals[i]["desc"] = v.toString();
@@ -86,10 +90,20 @@ class _SavingsGoalsSetupState extends State<SavingsGoalsSetup> {
     return savingItemsWidget;
   }
 
+  void _addFieldSavingsGoals() {
+    setState(() {
+      _savingsGoals.add({
+        "judul": TextEditingController(text: "Goal name"),
+        "target_amount": TextEditingController(),
+        "desc": TextEditingController(text: "description"),
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     print("Final List: $listFieldSavingsGoals");
-    
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
@@ -110,7 +124,7 @@ class _SavingsGoalsSetupState extends State<SavingsGoalsSetup> {
               ),
               const SizedBox(height: 12),
               const Text(
-                "Savings Goals",
+                "Savings Goals (optional)",
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 8),
@@ -120,6 +134,20 @@ class _SavingsGoalsSetupState extends State<SavingsGoalsSetup> {
               ),
               const SizedBox(height: 12),
               ..._buildCardSavingsGoalsInput(),
+              const SizedBox(height: 10),
+              CustomCardContainer(
+                isShadow: false,
+                isBorder: true,
+                widthContainer: double.infinity,
+                onTapCard: () {
+                  _addFieldSavingsGoals();
+                },
+                childContainer: const Text(
+                  "Add Another Goal",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ),
             ],
           ),
         ),

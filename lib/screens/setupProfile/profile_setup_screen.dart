@@ -1,4 +1,5 @@
 import 'package:financemanager/providers/profile_setup_provider.dart';
+import 'package:financemanager/screens/setupProfile/final_setup.dart';
 import 'package:financemanager/screens/setupProfile/monthly_expenses_input.dart';
 import 'package:financemanager/screens/setupProfile/savings_goals_Setup.dart';
 import 'package:flutter/material.dart';
@@ -16,11 +17,10 @@ class ProfileSetupScreen extends StatefulWidget {
 
 class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
   final List<Widget> _setupPages = [
-    const SavingsGoalsSetup(),
     const CurrentBalanceInput(),
     const MonthlyExpensesInput(),
-    const Text("Halaman Ketiga: Tujuan Anggaran (placeholder)"),
-    const Text("Halaman Keempat: Tinjau & Konfirmasi (placeholder)"),
+    const SavingsGoalsSetup(),
+    const FinalSetup(),
   ];
 
   @override
@@ -31,6 +31,8 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
     final int clampedIndex = (currentStep - 1).clamp(0, _setupPages.length - 1);
     final Widget currentPage = _setupPages[clampedIndex];
 
+print(currentStep);
+print(_setupPages.length);
     return Scaffold(
       body: Column(
         children: [
@@ -150,12 +152,12 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
               widthContainer: 106,
               isShadow: false,
               cardColor: Colors.blue,
-              childContainer: const Row(
+              childContainer: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("Continue", style: TextStyle(color: Colors.white)),
-                  SizedBox(width: 4),
-                  Icon(Icons.arrow_forward, size: 16, color: Colors.white),
+                  Text( currentStep !=_setupPages.length?"Continue":"Finish", style: const TextStyle(color: Colors.white)),
+                  const SizedBox(width: 4),
+                  const Icon(Icons.arrow_forward, size: 16, color: Colors.white),
                 ],
               ),
             ),
