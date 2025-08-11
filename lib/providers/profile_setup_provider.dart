@@ -1,4 +1,4 @@
-import 'package:financemanager/widgets/custom/custom_snackbar.dart';
+import 'package:financemanager/services/financial_summary_services.dart';
 import 'package:flutter/material.dart';
 
 class ProfileSetupProvider extends ChangeNotifier {
@@ -47,7 +47,9 @@ class ProfileSetupProvider extends ChangeNotifier {
 
   bool validateMonthlyExpenseInput() {
     return _monthlyExpense.isNotEmpty &&
-      _monthlyExpense.every((expense) => (expense['valueExpense'] as int) > 0);
+        _monthlyExpense.every(
+          (expense) => (expense['valueExpense'] as int) > 0,
+        );
   }
 
   // Method step 3
@@ -74,11 +76,15 @@ class ProfileSetupProvider extends ChangeNotifier {
       isValid = validateMonthlyExpenseInput();
     } else if (_currentStep == 3) {
       isValid = validateSavingsGoalsInput();
-    }else if(_currentStep == 4){
+    } else if (_currentStep == 4) {
+      await FinancialSummaryServices().saveFinancialSummary(
+        balance: int.parse(currentBalance),
+        monthlyIncome: int.parse(monthlyIncome),
+      );
       isValid = true;
     }
 
-      print("${_currentStep+1} < ${totalSteps}");
+    print("${_currentStep + 1} < ${totalSteps}");
     if (isValid) {
       if (_currentStep < totalSteps) {
         _currentStep++;

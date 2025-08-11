@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthServices {
@@ -8,6 +9,16 @@ class AuthServices {
       email: email,
       password: password,
     );
+
+    await FirebaseFirestore.instance
+        .collection('user')
+        .doc(cred.user!.uid)
+        .set({
+          'email': email,
+          'isSetupProfile': false,
+          'createAt': FieldValue.serverTimestamp(),
+        });
+
     return cred.user;
   }
 

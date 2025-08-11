@@ -10,10 +10,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
-  // WidgetsFlutterBinding.ensureInitialized();
-  // await Firebase.initializeApp(
-  //   options: DefaultFirebaseOptions.currentPlatform
-  // );
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform
+  );
 
   runApp(ChangeNotifierProvider(
     create: (context)=> ProfileSetupProvider(),
@@ -53,6 +53,8 @@ class Wrapper extends StatelessWidget {
           );
         }
 
+
+        
         if (snapshot.hasData) {
           return const HomeScreen();
         }else{

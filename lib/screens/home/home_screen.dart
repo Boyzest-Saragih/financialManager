@@ -1,4 +1,6 @@
 // import 'package:financemanager/services/auth_services.dart';
+import 'package:financemanager/services/auth_services.dart';
+import 'package:financemanager/services/financial_summary_services.dart';
 import 'package:financemanager/widgets/custom/custom_card_container.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -13,7 +15,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  // final auth = AuthServices();
+  final auth = AuthServices();
+  final financialSummary = FinancialSummaryServices();
 
   String formatDate(DateTime date) {
     final DateFormat formatter = DateFormat('EEEE, MMMM d');
@@ -22,7 +25,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // final user = auth.currentUser;
+    final user = auth.currentUser;
+    final balance = financialSummary.getFinancialSummary();
+    print(balance);
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(

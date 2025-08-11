@@ -1,5 +1,5 @@
-import 'package:financemanager/screens/home/home_screen.dart';
 import 'package:financemanager/screens/auth/login_screen.dart';
+import 'package:financemanager/screens/setupProfile/profile_setup_screen.dart';
 import 'package:financemanager/services/auth_services.dart';
 import 'package:financemanager/widgets/custom/custom_button.dart';
 import 'package:financemanager/widgets/custom/custom_snackbar.dart';
@@ -25,10 +25,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
       backgroundColor: const Color(0xFFF9FAFB),
       body: Center(
         child: SingleChildScrollView(
-          // Changed padding to match LoginScreen
           padding: const EdgeInsets.all(24),
           child: Column(
-            // Added mainAxisSize to match LoginScreen
             mainAxisSize: MainAxisSize.min,
             children: [
               const Text(
@@ -99,7 +97,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           Navigator.pushAndRemoveUntil(
                             context,
                             MaterialPageRoute(
-                              builder: (BuildContext context) => HomeScreen(),
+                              builder: (BuildContext context) => ProfileSetupScreen(),
                             ),
                             ModalRoute.withName("/"),
                           );

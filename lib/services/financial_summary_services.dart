@@ -26,4 +26,25 @@ class FinancialSummaryServices {
     await docRef.set(summary.toFirestore());
     print("Summary financial data success to save");
   }
+
+  Future<List<FinancialSummary>> getFinancialSummary() async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) {
+      return [];
+    }
+
+    final snapshot =
+        await FirebaseFirestore.instance
+            .collection('user')
+            .doc(user.uid)
+            .collection("financial_data")
+            .get();
+
+    final summaries =
+        snapshot.docs.map((doc) {
+          return FinancialSummary.fromFirestore(doc);
+        }).toList();
+
+    return summaries;
+  }
 }
