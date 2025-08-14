@@ -1,4 +1,6 @@
 import 'package:financemanager/providers/profile_setup_provider.dart';
+import 'package:financemanager/screens/drawer_screen.dart';
+import 'package:financemanager/screens/home/home_screen.dart';
 import 'package:financemanager/screens/setupProfile/final_setup.dart';
 import 'package:financemanager/screens/setupProfile/monthly_expenses_input.dart';
 import 'package:financemanager/screens/setupProfile/savings_goals_Setup.dart';
@@ -61,9 +63,7 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
                         border: Border.all(color: Colors.black, width: 1),
                         borderRadius: BorderRadius.circular(12),
                       ),
-                      child: Text(
-                        "Step $currentStep of ${_setupPages.length}",
-                      ),
+                      child: Text("Step $currentStep of ${_setupPages.length}"),
                     ),
                   ],
                 ),
@@ -81,7 +81,7 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
                     value: currentStep.toDouble(),
                     min: 0,
                     max: _setupPages.length.toDouble(),
-                    onChanged: (v){},
+                    onChanged: (v) {},
                   ),
                 ),
               ],
@@ -114,30 +114,31 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
               widthContainer: 80,
               isShadow: false,
               cardColor: (currentStep == 1) ? Colors.grey[300]! : Colors.white,
-              childContainer:Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.arrow_back,
-                      size: 16,
+              childContainer: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.arrow_back,
+                    size: 16,
+                    color: (currentStep == 1) ? Colors.grey : Colors.black,
+                  ),
+                  const SizedBox(width: 4),
+                  Text(
+                    "Back",
+                    style: TextStyle(
                       color: (currentStep == 1) ? Colors.grey : Colors.black,
                     ),
-                    const SizedBox(width: 4),
-                    Text(
-                      "Back",
-                      style: TextStyle(
-                        color: (currentStep == 1) ? Colors.grey : Colors.black,
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
+            ),
 
             CustomCardContainer(
               onTapCard: () async {
                 bool canProceed = await context
                     .read<ProfileSetupProvider>()
-                    .continueStep(context, _setupPages.length);
+                    .continueStep(_setupPages.length);
+                if (!context.mounted) return;
                 if (!canProceed) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     CustomSnackBar(
@@ -146,16 +147,37 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
                     ),
                   );
                 }
+
+                print(
+                  "${setupFlowProvider.currentStep} > ${_setupPages.length}",
+                );
+
+                if (setupFlowProvider.currentStep > _setupPages.length) {
+                  print("execute");
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (_) => DrawerScreen()),
+                    ModalRoute.withName("/"),
+                  );
+                }
               },
+
               widthContainer: 106,
               isShadow: false,
               cardColor: Colors.blue,
               childContainer: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text( currentStep !=_setupPages.length?"Continue":"Finish", style: const TextStyle(color: Colors.white)),
+                  Text(
+                    currentStep != _setupPages.length ? "Continue" : "Finish",
+                    style: const TextStyle(color: Colors.white),
+                  ),
                   const SizedBox(width: 4),
-                  const Icon(Icons.arrow_forward, size: 16, color: Colors.white),
+                  const Icon(
+                    Icons.arrow_forward,
+                    size: 16,
+                    color: Colors.white,
+                  ),
                 ],
               ),
             ),

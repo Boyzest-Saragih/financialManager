@@ -24,7 +24,6 @@ class FinancialSummaryServices {
     );
 
     await docRef.set(summary.toFirestore());
-    print("Summary financial data success to save");
   }
 
   Future<List<FinancialSummary>> getFinancialSummary() async {

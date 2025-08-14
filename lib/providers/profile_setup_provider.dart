@@ -1,4 +1,7 @@
+import 'package:financemanager/models/monthly_expense_model.dart';
+import 'package:financemanager/services/auth_services.dart';
 import 'package:financemanager/services/financial_summary_services.dart';
+import 'package:financemanager/services/monthly_expense_services.dart';
 import 'package:flutter/material.dart';
 
 class ProfileSetupProvider extends ChangeNotifier {
@@ -12,8 +15,8 @@ class ProfileSetupProvider extends ChangeNotifier {
   String get monthlyIncome => _monthlyIncome;
 
   // data step 2
-  List<Map<String, dynamic>> _monthlyExpense = [];
-  List<Map<String, dynamic>> get monthlyExpense => _monthlyExpense;
+  final List<MonthlyExpenseItem> _monthlyExpense = [];
+  List<MonthlyExpenseItem> get monthlyExpense => _monthlyExpense;
 
   // data step 3
   List<Map<String, dynamic>> _savingsGoals = [];
@@ -29,7 +32,7 @@ class ProfileSetupProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  bool validateCurrBalanceInput(BuildContext context) {
+  bool validateCurrBalanceInput() {
     if (_currentBalance.isEmpty || _monthlyIncome.isEmpty) {
       return false;
     }
@@ -40,16 +43,25 @@ class ProfileSetupProvider extends ChangeNotifier {
   void updateMonthlyExpenseInput({
     required List<Map<String, dynamic>> monthlyExpenseData,
   }) {
-    _monthlyExpense = monthlyExpenseData;
+    _monthlyExpense.clear();
 
+    _monthlyExpense.addAll(
+      monthlyExpenseData.map(
+        (data) => MonthlyExpenseItem(
+          title: data['title'] ?? '',
+          desc: data['desc'] ?? '',
+          valueExpense: (data['valueExpense'] ?? 0).toDouble(),
+        ),
+      ),
+    );
+
+    print(monthlyExpense);
     notifyListeners();
   }
 
   bool validateMonthlyExpenseInput() {
     return _monthlyExpense.isNotEmpty &&
-        _monthlyExpense.every(
-          (expense) => (expense['valueExpense'] as int) > 0,
-        );
+        _monthlyExpense.every((expense) => expense.valueExpense > 0);
   }
 
   // Method step 3
@@ -67,31 +79,43 @@ class ProfileSetupProvider extends ChangeNotifier {
         );
   }
 
-  Future<bool> continueStep(BuildContext context, int totalSteps) async {
+  Future<void> saveFinancialData() async {
+    try {
+      await AuthServices().updateIsSetupProfile(true);
+      await FinancialSummaryServices().saveFinancialSummary(
+        balance: int.parse(currentBalance),
+        monthlyIncome: int.parse(monthlyIncome),
+      );
+      await MonthlyExpenseServices().saveMonthlyExpense(monthlyExpense);
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future<bool> continueStep(int totalSteps) async {
     bool isValid = false;
 
     if (_currentStep == 1) {
-      isValid = validateCurrBalanceInput(context);
+      isValid = validateCurrBalanceInput();
     } else if (_currentStep == 2) {
       isValid = validateMonthlyExpenseInput();
     } else if (_currentStep == 3) {
       isValid = validateSavingsGoalsInput();
     } else if (_currentStep == 4) {
-      await FinancialSummaryServices().saveFinancialSummary(
-        balance: int.parse(currentBalance),
-        monthlyIncome: int.parse(monthlyIncome),
-      );
+      await saveFinancialData();
+        _currentStep++;
+
       isValid = true;
     }
 
-    print("${_currentStep + 1} < ${totalSteps}");
+ print("${_currentStep + 1} < ${totalSteps}");
     if (isValid) {
       if (_currentStep < totalSteps) {
         _currentStep++;
         notifyListeners();
         return true;
       } else {
-        print("Setup finish");
+        print("finish");
         return true;
       }
     }

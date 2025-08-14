@@ -87,7 +87,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                           ScaffoldMessenger.of(context).showSnackBar(
                             CustomSnackBar(
-                              message: "Registration successful!",
+                              message: "Login successful!",
                               backgroundColor: Colors.green,
                               icon: Icons.check_circle_outline,
                             ),

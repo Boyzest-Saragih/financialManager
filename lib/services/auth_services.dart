@@ -33,4 +33,27 @@ class AuthServices {
   Future<void> logout() async => await _auth.signOut();
 
   User? get currentUser => _auth.currentUser;
+
+  Future<bool?> getIsSetupProfile() async {
+    if (currentUser == null) return null;
+
+    final docSnap = await FirebaseFirestore.instance
+        .collection('user')
+        .doc(currentUser!.uid)
+        .get();
+
+    if (docSnap.exists) {
+      return docSnap.data()?['isSetupProfile'] as bool?;
+    }
+    return null;
+  }
+
+  Future<void> updateIsSetupProfile(bool value) async {
+    if (currentUser == null) return;
+
+    await FirebaseFirestore.instance
+        .collection('user')
+        .doc(currentUser!.uid)
+        .update({'isSetupProfile': value});
+  }
 }
