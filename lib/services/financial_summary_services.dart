@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:financemanager/models/financial_summary.dart';
+import 'package:financemanager/models/financial_summary_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class FinancialSummaryServices {

@@ -1,0 +1,38 @@
+[[
+    {
+        "id": "jjjj",
+        "title": "almak",
+        "target": 100000,
+        "desc": "almal kld djhv",
+        "current": 10000,
+        "isdone": false
+    },
+    {
+        "id": "jjjj",
+        "title": "almak",
+        "target": 100000,
+        "desc": "almal kld djhv",
+        "current": 10000,
+        "isdone": false
+    }
+],
+
+
+[
+    {
+        "tgl": "01-08-2002",
+        "cashflow": 5000
+    },
+    {
+        "tgl": "01-08-2002",
+        "cashflow": 5000
+    },
+            {
+        "tgl": "01-08-2002",
+        "cashflow": 5000
+    },
+    {
+        "tgl": "01-08-2002",
+        "cashflow": 5000
+    }
+]]
