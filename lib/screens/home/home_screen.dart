@@ -27,7 +27,6 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final user = auth.currentUser;
     final balance = financialSummary.getFinancialSummary();
-    print(balance);
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(

@@ -1,6 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/foundation.dart';
-
 class SavingsGoalItem {
   final String title;
   final String desc;
@@ -33,10 +30,20 @@ class SavingsGoalItem {
   }
 }
 
-
 class ProfileSavingGoals {
-  final List <SavingsGoalItem> savingGoals;
+  final List<SavingsGoalItem> savingGoals;
   ProfileSavingGoals({required this.savingGoals});
 
-  
+  factory ProfileSavingGoals.fromMap(Map<String, dynamic> map) {
+    return ProfileSavingGoals(
+      savingGoals:
+          List<Map<String, dynamic>>.from(
+            map['savingGoals'] ?? [],
+          ).map((e) => SavingsGoalItem.fromMap(e)).toList(),
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {'savingGoals': savingGoals.map((e) => e.toMap()).toList()};
+  }
 }

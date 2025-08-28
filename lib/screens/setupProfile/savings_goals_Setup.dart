@@ -14,12 +14,12 @@ class SavingsGoalsSetup extends StatefulWidget {
 class _SavingsGoalsSetupState extends State<SavingsGoalsSetup> {
   final List<Map<String, dynamic>> _savingsGoals = [
     {
-      "judul": TextEditingController(text: "Emergency Fund"),
+      "title": TextEditingController(text: "Emergency Fund"),
       "target_amount": TextEditingController(),
       "desc": TextEditingController(text: "Safety net for unexpected expenses"),
     },
     {
-      "judul": TextEditingController(text: "Vacation Fund"),
+      "title": TextEditingController(text: "Vacation Fund"),
       "target_amount": TextEditingController(),
       "desc": TextEditingController(text: "Saving for a trip to Bali"),
     },
@@ -29,7 +29,7 @@ class _SavingsGoalsSetupState extends State<SavingsGoalsSetup> {
   List<Map<String, dynamic>> _buildSavingsGoalsDataList() {
     return _savingsGoals.map((goal) {
       return {
-        "judul": goal["judul"]!.text,
+        "title": goal["title"]!.text,
         "target_amount": int.tryParse(goal["target_amount"]!.text) ?? 0,
         "desc": goal["desc"]!.text,
       };
@@ -51,7 +51,7 @@ class _SavingsGoalsSetupState extends State<SavingsGoalsSetup> {
                   CustomTextField(
                     borderColor: const Color.fromARGB(255, 233, 233, 235),
                     fillColor: const Color.fromARGB(255, 233, 233, 235),
-                    controller: _savingsGoals[i]["judul"],
+                    controller: _savingsGoals[i]["title"],
                     onChangedField: (v) {
                       setupFlowProvider.updateSavingsGoals(
                         savingsGoalsData: _buildSavingsGoalsDataList(),
@@ -97,7 +97,7 @@ class _SavingsGoalsSetupState extends State<SavingsGoalsSetup> {
   void _addFieldSavingsGoals() {
     setState(() {
       _savingsGoals.add({
-        "judul": TextEditingController(text: "Goal name"),
+        "title": TextEditingController(text: "Goal name"),
         "target_amount": TextEditingController(),
         "desc": TextEditingController(text: "description"),
       });

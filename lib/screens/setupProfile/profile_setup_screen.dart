@@ -1,6 +1,5 @@
 import 'package:financemanager/providers/profile_setup_provider.dart';
 import 'package:financemanager/screens/drawer_screen.dart';
-import 'package:financemanager/screens/home/home_screen.dart';
 import 'package:financemanager/screens/setupProfile/final_setup.dart';
 import 'package:financemanager/screens/setupProfile/monthly_expenses_input.dart';
 import 'package:financemanager/screens/setupProfile/savings_goals_Setup.dart';
@@ -148,12 +147,7 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
                   );
                 }
 
-                print(
-                  "${setupFlowProvider.currentStep} > ${_setupPages.length}",
-                );
-
                 if (setupFlowProvider.currentStep > _setupPages.length) {
-                  print("execute");
                   Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(builder: (_) => DrawerScreen()),

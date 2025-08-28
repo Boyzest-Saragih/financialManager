@@ -1,7 +1,9 @@
 import 'package:financemanager/models/monthly_expense_model.dart';
+import 'package:financemanager/models/savings_goals_model.dart';
 import 'package:financemanager/services/auth_services.dart';
 import 'package:financemanager/services/financial_summary_services.dart';
 import 'package:financemanager/services/monthly_expense_services.dart';
+import 'package:financemanager/services/savings_goals_services.dart';
 import 'package:flutter/material.dart';
 
 class ProfileSetupProvider extends ChangeNotifier {
@@ -19,8 +21,8 @@ class ProfileSetupProvider extends ChangeNotifier {
   List<MonthlyExpenseItem> get monthlyExpense => _monthlyExpense;
 
   // data step 3
-  List<Map<String, dynamic>> _savingsGoals = [];
-  List<Map<String, dynamic>> get savingsGoals => _savingsGoals;
+  final List<SavingsGoalItem> _savingsGoals = [];
+  List<SavingsGoalItem> get savingsGoals => _savingsGoals;
 
   // Method step 1
   void updateCurrentBalanceInput({
@@ -55,7 +57,6 @@ class ProfileSetupProvider extends ChangeNotifier {
       ),
     );
 
-    print(monthlyExpense);
     notifyListeners();
   }
 
@@ -68,15 +69,23 @@ class ProfileSetupProvider extends ChangeNotifier {
   void updateSavingsGoals({
     required List<Map<String, dynamic>> savingsGoalsData,
   }) {
-    _savingsGoals = savingsGoalsData;
+    _savingsGoals.clear();
+    _savingsGoals.addAll(
+      savingsGoalsData.map(
+        (data) => SavingsGoalItem(
+          title: data['title'],
+          desc: data['desc'],
+          target: (data['target_amount']).toDouble(),
+          progress: 0,
+        ),
+      ),
+    );
     notifyListeners();
   }
 
   bool validateSavingsGoalsInput() {
     return _savingsGoals.isNotEmpty &&
-        _savingsGoals.every(
-          (goal) => goal['judul'].isNotEmpty && goal['target_amount'] > 0,
-        );
+        _savingsGoals.every((goal) => goal.target > 0);
   }
 
   Future<void> saveFinancialData() async {
@@ -87,6 +96,7 @@ class ProfileSetupProvider extends ChangeNotifier {
         monthlyIncome: int.parse(monthlyIncome),
       );
       await MonthlyExpenseServices().saveMonthlyExpense(monthlyExpense);
+      await SavingsGoalsServices().saveSavingGoal(savingsGoals);
     } catch (e) {
       print(e);
     }
@@ -103,19 +113,17 @@ class ProfileSetupProvider extends ChangeNotifier {
       isValid = validateSavingsGoalsInput();
     } else if (_currentStep == 4) {
       await saveFinancialData();
-        _currentStep++;
+      _currentStep++;
 
       isValid = true;
     }
 
- print("${_currentStep + 1} < ${totalSteps}");
     if (isValid) {
       if (_currentStep < totalSteps) {
         _currentStep++;
         notifyListeners();
         return true;
       } else {
-        print("finish");
         return true;
       }
     }
