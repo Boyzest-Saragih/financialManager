@@ -1,10 +1,11 @@
 // import 'package:financemanager/services/auth_services.dart';
-import 'package:financemanager/services/auth_services.dart';
+import 'package:financemanager/providers/financial_summary_provider.dart';
 import 'package:financemanager/services/financial_summary_services.dart';
 import 'package:financemanager/widgets/custom/custom_card_container.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:provider/provider.dart';
 import '../../widgets/custom_chart/line_chart_net_income.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -15,18 +16,23 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final auth = AuthServices();
-  final financialSummary = FinancialSummaryServices();
 
   String formatDate(DateTime date) {
     final DateFormat formatter = DateFormat('EEEE, MMMM d');
     return formatter.format(date);
   }
+  @override
+  void initState(){
+    // TODO: implement initState
+    Provider.of<FinancialSummaryProvider>(context, listen: false).getSumarriesFinancial();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final user = auth.currentUser;
-    final balance = financialSummary.getFinancialSummary();
+    final balance = context.watch<FinancialSummaryProvider>().balance;
+    final monthlyIncome = context.watch<FinancialSummaryProvider>().monthlyIncome;
+    print(balance);
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
@@ -50,7 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
+                  children:[
                     Text(
                       "Total Balance",
                       style: TextStyle(
@@ -61,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     SizedBox(height: 16),
                     Text(
-                      "Rp 500.000,00",
+                      "Rp $balance",
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
