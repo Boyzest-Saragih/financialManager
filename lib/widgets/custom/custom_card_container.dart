@@ -6,6 +6,7 @@ class CustomCardContainer extends StatelessWidget {
   final double? widthContainer;
   final bool isShadow;
   final bool isBorder;
+  final double borderRadius;
   final Color borderColor;
   final VoidCallback? onTapCard;
   final double padding;
@@ -16,6 +17,7 @@ class CustomCardContainer extends StatelessWidget {
     this.widthContainer,
     this.isShadow = true,
     this.isBorder = false,
+    this.borderRadius = 15,
     this.borderColor = Colors.grey,
     this.onTapCard,
     this.padding = 12
@@ -30,7 +32,7 @@ class CustomCardContainer extends StatelessWidget {
       width: widthContainer,
       decoration: BoxDecoration(
         color: cardColor,
-        borderRadius: BorderRadius.circular(15),
+        borderRadius: BorderRadius.circular(borderRadius),
         border: isBorder?Border.all(width: 1, color:borderColor.withOpacity(0.5)) :Border(),
         boxShadow: [
           BoxShadow(

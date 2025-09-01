@@ -2,6 +2,7 @@ import 'package:financemanager/firebase_options.dart';
 import 'package:financemanager/providers/financial_summary_provider.dart';
 import 'package:financemanager/providers/profile_setup_provider.dart';
 import 'package:financemanager/screens/auth/register_screen.dart';
+import 'package:financemanager/screens/cashflow/cash_flow_screen.dart';
 import 'package:financemanager/screens/drawer_screen.dart';
 import 'package:financemanager/screens/setupProfile/profile_setup_screen.dart';
 import 'package:financemanager/services/auth_services.dart';
@@ -37,8 +38,8 @@ class MyApp extends StatelessWidget {
         primaryColor: const Color(0xFFF9FAFB),
       ),
       home: 
-      // const ProfileSetupScreen()
-      const Wrapper(),
+      const CashFlowScreen()
+      // const Wrapper(),
     );
   }
 }
