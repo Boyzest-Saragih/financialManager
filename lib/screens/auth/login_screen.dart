@@ -1,3 +1,4 @@
+import 'package:financemanager/screens/drawer_screen.dart';
 import 'package:financemanager/screens/home/home_screen.dart';
 import 'package:financemanager/screens/auth/register_screen.dart';
 import 'package:financemanager/widgets/custom/custom_snackbar.dart';
@@ -96,7 +97,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           Navigator.pushAndRemoveUntil(
                             context,
                             MaterialPageRoute(
-                              builder: (BuildContext context) => HomeScreen(),
+                              builder: (BuildContext context) => DrawerScreen(),
                             ),
                             ModalRoute.withName("/"),
                           );

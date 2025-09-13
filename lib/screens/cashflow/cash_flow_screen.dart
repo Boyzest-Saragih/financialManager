@@ -1,3 +1,4 @@
+import 'package:financemanager/screens/cashflow/categories.dart';
 import 'package:financemanager/widgets/custom/custom_card_container.dart';
 import 'package:flutter/material.dart';
 
@@ -8,7 +9,22 @@ class CashFlowScreen extends StatefulWidget {
   State<CashFlowScreen> createState() => _CashFlowScreenState();
 }
 
-class _CashFlowScreenState extends State<CashFlowScreen> {
+class _CashFlowScreenState extends State<CashFlowScreen>
+    with SingleTickerProviderStateMixin {
+  late TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 2, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -149,7 +165,62 @@ class _CashFlowScreenState extends State<CashFlowScreen> {
                 ],
               ),
               const SizedBox(height: 30),
-              
+              CustomCardContainer(
+                padding: 20,
+                childContainer: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text("Net Cash Flow"),
+                    const SizedBox(height: 10),
+
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          "+ Rp 6.500.000",
+                          style: TextStyle(
+                            color: Colors.green,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Row(
+                          children: [
+                            const Icon(
+                              Icons.bar_chart_outlined,
+                              size: 30,
+                              color: Colors.blue,
+                            ),
+                            const SizedBox(width: 5),
+
+                            const Icon(Icons.arrow_right_alt, size: 30),
+                          ],
+                        ),
+                      ],
+                    ),
+                    const Text("32.5% of income saved"),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 30),
+              TabBar(
+                controller: _tabController,
+                indicatorColor: Colors.blue,
+                labelColor: Colors.blue,
+                unselectedLabelColor: Colors.grey,
+                tabs: [Tab(text: "Categories"), Tab(text: "Transactions")],
+              ),
+              const SizedBox(height: 20,),
+              SizedBox(
+                height: 800,
+                child: TabBarView(
+                  controller: _tabController,
+                  children: const [
+                    Categories(),
+                    Center(child: Text("Transactions Tab")),
+                  ],
+                ),
+              ),
             ],
           ),
         ),

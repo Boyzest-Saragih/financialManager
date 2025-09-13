@@ -1,5 +1,6 @@
 import 'package:financemanager/firebase_options.dart';
 import 'package:financemanager/providers/financial_summary_provider.dart';
+import 'package:financemanager/providers/monthly_expenses_provider.dart';
 import 'package:financemanager/providers/profile_setup_provider.dart';
 import 'package:financemanager/screens/auth/register_screen.dart';
 import 'package:financemanager/screens/cashflow/cash_flow_screen.dart';
@@ -18,8 +19,9 @@ void main() async {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_)=> ProfileSetupProvider()),
-        ChangeNotifierProvider(create: (_)=> FinancialSummaryProvider()),
+        ChangeNotifierProvider(create: (_) => ProfileSetupProvider()),
+        ChangeNotifierProvider(create: (_) => FinancialSummaryProvider()),
+        ChangeNotifierProvider(create: (_) => MonthlyExpensesProvider()),
       ],
       child: const MyApp(),
     ),
@@ -32,14 +34,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      // showPerformanceOverlay: true,
       title: 'FinTrack',
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.grey.shade100,
         primaryColor: const Color(0xFFF9FAFB),
       ),
-      home: 
-      const CashFlowScreen()
-      // const Wrapper(),
+      home:
+          // const CashFlowScreen()
+          const Wrapper(),
     );
   }
 }

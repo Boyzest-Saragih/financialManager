@@ -1,5 +1,6 @@
 // import 'package:financemanager/services/auth_services.dart';
 import 'package:financemanager/providers/financial_summary_provider.dart';
+import 'package:financemanager/utils/idr_currency.dart';
 import 'package:financemanager/widgets/custom/custom_card_container.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -31,7 +32,6 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final balance = context.watch<FinancialSummaryProvider>().balance;
     final monthlyIncome = context.watch<FinancialSummaryProvider>().monthlyIncome;
-    print(balance);
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
@@ -66,7 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     SizedBox(height: 16),
                     Text(
-                      "Rp $balance",
+                      "${IdrCurrency.format(balance)}",
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,

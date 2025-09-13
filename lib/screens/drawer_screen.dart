@@ -1,3 +1,4 @@
+import 'package:financemanager/screens/cashflow/cash_flow_screen.dart';
 import 'package:financemanager/screens/home/home_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -13,8 +14,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
 
   final List<Widget> _screens = [
     HomeScreen(),
-    Placeholder(), // Ganti dengan JournalScreen()
-    Placeholder(), // Ganti dengan CashFlowScreen()
+    CashFlowScreen(),
     Placeholder(), // Ganti dengan ArchiveScreen()
     Placeholder(), // Ganti dengan ScanScreen()
   ];
@@ -98,10 +98,9 @@ class _DrawerScreenState extends State<DrawerScreen> {
         type: BottomNavigationBarType.fixed,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-          BottomNavigationBarItem(icon: Icon(Icons.book_sharp), label: "Journal"),
-          BottomNavigationBarItem(icon: Icon(Icons.money_sharp), label: "Cash"),
-          BottomNavigationBarItem(icon: Icon(Icons.archive_rounded), label: "Archive"),
-          BottomNavigationBarItem(icon: Icon(Icons.scanner), label: "Scan"),
+          BottomNavigationBarItem(icon: Icon(Icons.money_sharp), label: "Cash Flow"),
+          BottomNavigationBarItem(icon: Icon(Icons.archive_rounded), label: "Savings"),
+          BottomNavigationBarItem(icon: Icon(Icons.scanner), label: "AI Scan"),
         ],
       ),
     );
