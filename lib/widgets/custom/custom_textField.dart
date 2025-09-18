@@ -10,7 +10,7 @@ class CustomTextField extends StatefulWidget {
   final bool isBorder;
   final Color? borderColor;
   final Color? fillColor;
-  final FocusNode? focusNode; // ✅ Tambahan
+  final FocusNode? focusNode;
 
   const CustomTextField({
     super.key,
@@ -23,7 +23,7 @@ class CustomTextField extends StatefulWidget {
     this.isBorder = true,
     this.borderColor,
     this.fillColor,
-    this.focusNode, // ✅ Tambahan
+    this.focusNode,
   });
 
   @override
@@ -51,7 +51,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
             const SizedBox(height: 10),
           ],
           TextField(
-            focusNode: widget.focusNode, // ✅ Tambahan
+            focusNode: widget.focusNode, 
             onChanged: widget.onChangedField,
             keyboardType:
                 widget.isNumber ? TextInputType.number : TextInputType.text,

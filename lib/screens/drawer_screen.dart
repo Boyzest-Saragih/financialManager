@@ -13,8 +13,8 @@ class _DrawerScreenState extends State<DrawerScreen> {
   int _currentIndex = 0;
 
   final List<Widget> _screens = [
-    HomeScreen(),
     CashFlowScreen(),
+    HomeScreen(),
     Placeholder(), // Ganti dengan ArchiveScreen()
     Placeholder(), // Ganti dengan ScanScreen()
   ];

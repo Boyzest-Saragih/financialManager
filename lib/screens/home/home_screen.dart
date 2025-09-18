@@ -66,7 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     SizedBox(height: 16),
                     Text(
-                      "${IdrCurrency.format(balance)}",
+                      IdrCurrency.format(balance),
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,

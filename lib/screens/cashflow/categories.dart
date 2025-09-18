@@ -1,5 +1,6 @@
 import 'package:financemanager/providers/monthly_expenses_provider.dart';
 import 'package:financemanager/widgets/custom/custom_card_container.dart';
+import 'package:financemanager/widgets/custom/increasing_decreasing.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -51,21 +52,7 @@ class _CategoriesState extends State<Categories> {
                             children: [
                               Text(datas[index].title),
                               const SizedBox(height: 5),
-                              CustomCardContainer(
-                                isShadow: false,
-                                padding: 1,
-                                borderRadius: 10,
-                                childContainer: Row(
-                                  children: [
-                                    const Icon(
-                                      Icons.format_indent_increase,
-                                      size: 16,
-                                    ),
-                                    const SizedBox(width: 4),
-                                    const Text("increaseing"),
-                                  ],
-                                ),
-                              ),
+                              IncreasingDecreasing(used: datas[index].used, valueExpenses: datas[index].valueExpense)
                             ],
                           ),
                         ],

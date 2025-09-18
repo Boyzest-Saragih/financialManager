@@ -1,5 +1,4 @@
 import 'package:financemanager/screens/drawer_screen.dart';
-import 'package:financemanager/screens/home/home_screen.dart';
 import 'package:financemanager/screens/auth/register_screen.dart';
 import 'package:financemanager/widgets/custom/custom_snackbar.dart';
 import 'package:firebase_auth/firebase_auth.dart';

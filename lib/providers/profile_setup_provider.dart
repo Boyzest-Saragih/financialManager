@@ -53,6 +53,7 @@ class ProfileSetupProvider extends ChangeNotifier {
           title: data['title'] ?? '',
           desc: data['desc'] ?? '',
           valueExpense: (data['valueExpense'] ?? 0).toDouble(),
+          used: 100
         ),
       ),
     );

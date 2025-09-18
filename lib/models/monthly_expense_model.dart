@@ -2,11 +2,13 @@ class MonthlyExpenseItem {
   final String title;
   final String desc;
   final double valueExpense;
+  final double used;
 
   MonthlyExpenseItem({
     required this.title,
     required this.desc,
     required this.valueExpense,
+    required this.used,
   });
 
   factory MonthlyExpenseItem.fromMap(Map<String, dynamic> map) {
@@ -14,6 +16,7 @@ class MonthlyExpenseItem {
       title: map['title'] ?? '',
       desc: map['desc'] ?? '',
       valueExpense: (map['valueExpense'] ?? 0).toDouble(),
+      used: (map['used']??0).toDouble()
     );
   }
 
@@ -22,6 +25,7 @@ class MonthlyExpenseItem {
       'title': title,
       'desc': desc,
       'valueExpense': valueExpense,
+      'used':used
     };
   }
 }

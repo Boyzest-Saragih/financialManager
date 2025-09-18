@@ -1,6 +1,7 @@
 import 'package:financemanager/screens/cashflow/categories.dart';
 import 'package:financemanager/widgets/custom/custom_card_container.dart';
 import 'package:flutter/material.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 class CashFlowScreen extends StatefulWidget {
   const CashFlowScreen({super.key});
@@ -99,13 +100,14 @@ class _CashFlowScreenState extends State<CashFlowScreen>
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   CustomCardContainer(
-                    widthContainer: 220,
+                    widthContainer: 185,
                     childContainer: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Row(
                           children: [
-                            const Icon(Icons.bar_chart, color: Colors.green),
+                            const Icon(LucideIcons.trendingUp, color: Colors.green),
+                            const SizedBox(width: 5,),
                             const Text("Income"),
                           ],
                         ),
@@ -131,14 +133,16 @@ class _CashFlowScreenState extends State<CashFlowScreen>
                     ),
                   ),
                   CustomCardContainer(
-                    widthContainer: 220,
+                    widthContainer: 185,
                     childContainer: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Row(
                           children: [
-                            const Icon(Icons.bar_chart, color: Colors.red),
-                            const Text("Income"),
+                            const Icon(LucideIcons.trendingDown, color: Colors.red),
+                            const SizedBox(width: 5,),
+
+                            const Text("Expense"),
                           ],
                         ),
                         const SizedBox(height: 8),
