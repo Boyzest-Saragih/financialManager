@@ -7,7 +7,7 @@ class MonthlyExpensesProvider extends ChangeNotifier {
 
   void getMonthlyExpenseDatas() async {
     monthlyExpenseData =
-        await MonthlyExpenseServices().getMonthlyExpenseItems();
+        MonthlyExpenseServices().getMonthlyExpenseItems() as List<MonthlyExpenseItem>;
 
     notifyListeners();
   }

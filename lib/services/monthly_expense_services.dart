@@ -16,28 +16,27 @@ class MonthlyExpenseServices {
         .doc('user_monthly_expenses');
 
     await docRef.set(profile.toMap(), SetOptions(merge: true));
-    
   }
 
-  Future<List<MonthlyExpenseItem>> getMonthlyExpenseItems() async {
+  Stream<List<MonthlyExpenseItem>> getMonthlyExpenseItems() {
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) {
-      return [];
+      return Stream.value([]);
     }
 
-    final snapshot =
-        await FirebaseFirestore.instance
-            .collection('user')
-            .doc(user.uid)
-            .collection("financial_data")
-            .doc('user_monthly_expenses')
-            .get();
-
-    if (!snapshot.exists) return [];
-
-    final data = snapshot.data() as Map<String, dynamic>;
-    final profile = ProfileMonthlyExpense.fromMap(data);
-
-    return profile.expenses;
+    return FirebaseFirestore.instance
+        .collection('user')
+        .doc(user.uid)
+        .collection("financial_data")
+        .doc('user_monthly_expenses')
+        .snapshots()
+        .map((snapshot) {
+          if (!snapshot.exists || snapshot.data() == null) {
+            return [];
+          }
+          final data = snapshot.data() as Map<String, dynamic>;
+          final profile = ProfileMonthlyExpense.fromMap(data);
+          return profile.expenses;
+        });
   }
 }

@@ -1,36 +1,45 @@
-import 'package:financemanager/providers/monthly_expenses_provider.dart';
+import 'package:financemanager/models/monthly_expense_model.dart';
+import 'package:financemanager/utils/idr_currency.dart';
+import 'package:financemanager/utils/used_percentage.dart';
 import 'package:financemanager/widgets/custom/custom_card_container.dart';
 import 'package:financemanager/widgets/custom/increasing_decreasing.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class Categories extends StatefulWidget {
+class Categories extends StatelessWidget {
   const Categories({super.key});
 
-  @override
-  State<Categories> createState() => _CategoriesState();
-}
+  double getSliderValue(double valueExpense, double used) {
+    return used > valueExpense ? valueExpense : used;
+  }
 
-class _CategoriesState extends State<Categories> {
-  @override
-  void initState() {
-    // TODO: implement initState
-    Provider.of<MonthlyExpensesProvider>(
-      context,
-      listen: false,
-    ).getMonthlyExpenseDatas();
+  String getBudgetStatus(double valueExpense, double used) {
+    final sisa = valueExpense - used;
+    final label = sisa < 0 ? "over" : "left";
+    return "${IdrCurrency.format(sisa.abs().toInt())} $label";
+  }
 
-    super.initState();
+  Color getColor(
+    double valueExpense,
+    double used, {
+    Color normal = const Color.fromARGB(255, 33, 150, 243),
+    Color warning = const Color.fromARGB(255, 244, 67, 54),
+    Color success = const Color.fromARGB(255, 76, 175, 80),
+  }) {
+    if (used > valueExpense) return warning;
+    if (used == valueExpense) return success;
+    return normal;
   }
 
   @override
   Widget build(BuildContext context) {
-    final datas = context.watch<MonthlyExpensesProvider>().monthlyExpenseData;
+    final datas = context.watch<List<MonthlyExpenseItem>>();
     return Scaffold(
       body: ListView.separated(
         itemCount: datas.length,
         separatorBuilder: (context, index) => const SizedBox(height: 20),
         itemBuilder: (BuildContext context, int index) {
+          final data = datas[index];
           return Container(
             padding: EdgeInsets.all(4),
             child: CustomCardContainer(
@@ -50,9 +59,12 @@ class _CategoriesState extends State<Categories> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(datas[index].title),
+                              Text(data.title),
                               const SizedBox(height: 5),
-                              IncreasingDecreasing(used: datas[index].used, valueExpenses: datas[index].valueExpense)
+                              IncreasingDecreasing(
+                                used: data.used,
+                                valueExpenses: data.valueExpense,
+                              ),
                             ],
                           ),
                         ],
@@ -60,9 +72,11 @@ class _CategoriesState extends State<Categories> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          Text("200000"),
+                          Text(IdrCurrency.format(data.used.toInt())),
                           const SizedBox(height: 5),
-                          Text("of ${datas[index].valueExpense}"),
+                          Text(
+                            "of ${IdrCurrency.format(data.valueExpense.toInt())}",
+                          ),
                         ],
                       ),
                     ],
@@ -77,10 +91,10 @@ class _CategoriesState extends State<Categories> {
                       overlayShape: SliderComponentShape.noOverlay,
                     ),
                     child: Slider(
-                      activeColor: Colors.blue,
-                      value: 20,
+                      activeColor: getColor(data.valueExpense, data.used),
+                      value: getSliderValue(data.valueExpense, data.used),
                       min: 0,
-                      max: 100,
+                      max: data.valueExpense,
                       onChanged: (v) {},
                     ),
                   ),
@@ -89,8 +103,18 @@ class _CategoriesState extends State<Categories> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text("20% used"),
-                      const Text("Rp. 50000 over"),
+                      Text(
+                        UsedPercentage.format(data.valueExpense, data.used),
+                        style: TextStyle(
+                          color: getColor(data.valueExpense, data.used),
+                        ),
+                      ),
+                      Text(
+                        getBudgetStatus(data.valueExpense, data.used),
+                        style: TextStyle(
+                          color: getColor(data.valueExpense, data.used),
+                        ),
+                      ),
                     ],
                   ),
                 ],
