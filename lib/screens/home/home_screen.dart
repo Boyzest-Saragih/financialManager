@@ -1,10 +1,9 @@
 // import 'package:financemanager/services/auth_services.dart';
-import 'package:financemanager/providers/financial_summary_provider.dart';
+import 'package:financemanager/models/financial_summary_model.dart';
 import 'package:financemanager/utils/idr_currency.dart';
 import 'package:financemanager/widgets/custom/custom_card_container.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:fl_chart/fl_chart.dart';
 import 'package:provider/provider.dart';
 import '../../widgets/custom_chart/line_chart_net_income.dart';
 
@@ -21,17 +20,12 @@ class _HomeScreenState extends State<HomeScreen> {
     final DateFormat formatter = DateFormat('EEEE, MMMM d');
     return formatter.format(date);
   }
-  @override
-  void initState(){
-    // TODO: implement initState
-    Provider.of<FinancialSummaryProvider>(context, listen: false).getSumarriesFinancial();
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
-    final balance = context.watch<FinancialSummaryProvider>().balance;
-    final monthlyIncome = context.watch<FinancialSummaryProvider>().monthlyIncome;
+    final balance = context.watch<List<FinancialSummary>>()[0].balance;
+    final monthlyIncome = context.watch<List<FinancialSummary>>()[0].monthlyIncome;
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
@@ -113,7 +107,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         Icon(Icons.attach_money, size: 36, color: Colors.green),
                         const SizedBox(height: 12),
                         Text(
-                          "+Rp 100.000",
+                          "+${IdrCurrency.format(monthlyIncome)}",
                           style: TextStyle(
                             color: Colors.green,
                             fontSize: 20,
@@ -122,7 +116,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         const SizedBox(height: 6),
                         Text(
-                          "Monthly Savings",
+                          "Monthly Income",
                           style: TextStyle(color: Colors.grey),
                         ),
                         const SizedBox(height: 6),

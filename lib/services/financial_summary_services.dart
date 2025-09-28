@@ -26,24 +26,19 @@ class FinancialSummaryServices {
     await docRef.set(summary.toFirestore());
   }
 
-  Future<List<FinancialSummary>> getFinancialSummary() async {
+  Stream<List<FinancialSummary>> getFinancialSummary() {
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) {
-      return [];
+      return Stream.value([]);
     }
 
-    final snapshot =
-        await FirebaseFirestore.instance
-            .collection('user')
-            .doc(user.uid)
-            .collection("financial_data")
-            .get();
-
-    final summaries =
-        snapshot.docs.map((doc) {
-          return FinancialSummary.fromFirestore(doc);
-        }).toList();
-
-    return summaries;
+    return FirebaseFirestore.instance.collection('user').doc(user.uid).collection('financial_data').doc('user_financial_summary').snapshots().map((snapshot) {
+      if (!snapshot.exists || snapshot.data() == null) {
+        return [];
+      }
+      final data = snapshot.data() as Map<String, dynamic>;
+      final profile = FinancialSummary.fromFirestore(data);
+      return [profile];
+    },);
   }
 }
