@@ -1,4 +1,5 @@
 import 'package:financemanager/screens/cashflow/cash_flow_screen.dart';
+import 'package:financemanager/screens/chat/chat_screen.dart';
 import 'package:financemanager/screens/home/home_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -13,9 +14,9 @@ class _DrawerScreenState extends State<DrawerScreen> {
   int _currentIndex = 0;
 
   final List<Widget> _screens = [
-    CashFlowScreen(),
+    ChatScreen(),
     HomeScreen(),
-    Placeholder(), // Ganti dengan ArchiveScreen()
+    CashFlowScreen(),
     Placeholder(), // Ganti dengan ScanScreen()
   ];
 
@@ -99,6 +100,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
           BottomNavigationBarItem(icon: Icon(Icons.money_sharp), label: "Cash Flow"),
+          BottomNavigationBarItem(icon: Icon(Icons.message), label: "AI Chat"),
           BottomNavigationBarItem(icon: Icon(Icons.archive_rounded), label: "Savings"),
           BottomNavigationBarItem(icon: Icon(Icons.scanner), label: "AI Scan"),
         ],
