@@ -71,6 +71,9 @@ class _CashFlowScreenState extends State<CashFlowScreen>
                       ),
                       const SizedBox(width: 20),
                       CustomCardContainer(
+                        onTapCard: () {
+                          
+                        },
                         cardColor: Colors.blue,
                         isShadow: false,
                         padding: 6,

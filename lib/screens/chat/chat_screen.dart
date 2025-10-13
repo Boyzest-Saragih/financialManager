@@ -59,7 +59,7 @@ class _ChatScreenState extends State<ChatScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               SizedBox(
-                width: 450,
+                width: 400,
                 child: CustomTextField(
                   controller: chatMessageCtr,
                   hint: "Ask about your finance",
