@@ -1,3 +1,4 @@
+import 'package:financemanager/screens/cashflow/add_dialog.dart';
 import 'package:financemanager/screens/cashflow/categories.dart';
 import 'package:financemanager/widgets/custom/custom_card_container.dart';
 import 'package:flutter/material.dart';
@@ -72,7 +73,11 @@ class _CashFlowScreenState extends State<CashFlowScreen>
                       const SizedBox(width: 20),
                       CustomCardContainer(
                         onTapCard: () {
-                          
+                          showDialog(
+                            context: context,
+                            builder: (context) => AddDialog(),
+                          );
+                          print("add plis");
                         },
                         cardColor: Colors.blue,
                         isShadow: false,
@@ -109,8 +114,11 @@ class _CashFlowScreenState extends State<CashFlowScreen>
                       children: [
                         Row(
                           children: [
-                            const Icon(LucideIcons.trendingUp, color: Colors.green),
-                            const SizedBox(width: 5,),
+                            const Icon(
+                              LucideIcons.trendingUp,
+                              color: Colors.green,
+                            ),
+                            const SizedBox(width: 5),
                             const Text("Income"),
                           ],
                         ),
@@ -142,8 +150,11 @@ class _CashFlowScreenState extends State<CashFlowScreen>
                       children: [
                         Row(
                           children: [
-                            const Icon(LucideIcons.trendingDown, color: Colors.red),
-                            const SizedBox(width: 5,),
+                            const Icon(
+                              LucideIcons.trendingDown,
+                              color: Colors.red,
+                            ),
+                            const SizedBox(width: 5),
 
                             const Text("Expense"),
                           ],
@@ -217,7 +228,7 @@ class _CashFlowScreenState extends State<CashFlowScreen>
                 unselectedLabelColor: Colors.grey,
                 tabs: [Tab(text: "Categories"), Tab(text: "Transactions")],
               ),
-              const SizedBox(height: 20,),
+              const SizedBox(height: 20),
               SizedBox(
                 height: 800,
                 child: TabBarView(

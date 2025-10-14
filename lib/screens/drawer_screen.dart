@@ -18,6 +18,7 @@ class _DrawerScreenState extends State<DrawerScreen> {
     CashFlowScreen(),
     ChatScreen(),
     Placeholder(), // Ganti dengan ScanScreen()
+    Placeholder(), // Ganti dengan ScanScreen()
   ];
 
   @override
