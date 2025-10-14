@@ -34,7 +34,6 @@ class Categories extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final datas = context.watch<List<MonthlyExpenseItem>>();
-    print(datas);
     return Scaffold(
       body: ListView.separated(
         itemCount: datas.length,

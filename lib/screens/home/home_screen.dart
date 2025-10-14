@@ -1,4 +1,3 @@
-// import 'package:financemanager/services/auth_services.dart';
 import 'package:financemanager/models/financial_summary_model.dart';
 import 'package:financemanager/utils/idr_currency.dart';
 import 'package:financemanager/widgets/custom/custom_card_container.dart';
@@ -15,7 +14,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
   String formatDate(DateTime date) {
     final DateFormat formatter = DateFormat('EEEE, MMMM d');
     return formatter.format(date);
@@ -23,8 +21,14 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final balance = context.watch<List<FinancialSummary>>()[0].balance;
-    final monthlyIncome = context.watch<List<FinancialSummary>>()[0].monthlyIncome;
+    final financialSummaries = context.watch<List<FinancialSummary>?>();
+
+    if (financialSummaries == null || financialSummaries.isEmpty) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
+    final balance = financialSummaries[0].balance;
+    final monthlyIncome = financialSummaries[0].monthlyIncome;
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -49,7 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children:[
+                  children: [
                     Text(
                       "Total Balance",
                       style: TextStyle(
@@ -581,7 +585,12 @@ class _HomeScreenState extends State<HomeScreen> {
                         isBorder: true,
                         isShadow: false,
                         borderColor: const Color.fromARGB(255, 213, 213, 213),
-                        cardColor: Color.fromARGB(255, 213, 213, 213).withOpacity(0.2),
+                        cardColor: Color.fromARGB(
+                          255,
+                          213,
+                          213,
+                          213,
+                        ).withOpacity(0.2),
                         childContainer: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
