@@ -1,4 +1,7 @@
 import 'package:financemanager/models/monthly_expense_model.dart';
+import 'package:financemanager/models/transaction_model.dart';
+import 'package:financemanager/services/transactions_services.dart';
+import 'package:financemanager/utils/date_formatter.dart';
 import 'package:financemanager/widgets/custom/custom_card_container.dart';
 import 'package:financemanager/widgets/custom/custom_dropdown_field.dart';
 import 'package:financemanager/widgets/custom/custom_textField.dart';
@@ -123,6 +126,15 @@ class _AddDialogState extends State<AddDialog> {
               // 💾 Button
               CustomCardContainer(
                 onTapCard: () {
+                  TransactionsServices().saveTransactions(
+                    TransactionModel(
+                      date: DateTime.now(),
+                      type: _selectedType!,
+                      amount: amount!,
+                      desc: desc!,
+                      category: _selectedCategory!,
+                    ),
+                  );
                   print("Add transaction");
                   Navigator.pop(context);
                 },

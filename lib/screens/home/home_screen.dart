@@ -1,8 +1,8 @@
 import 'package:financemanager/models/financial_summary_model.dart';
+import 'package:financemanager/utils/date_formatter.dart';
 import 'package:financemanager/utils/idr_currency.dart';
 import 'package:financemanager/widgets/custom/custom_card_container.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import '../../widgets/custom_chart/line_chart_net_income.dart';
 
@@ -14,11 +14,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  String formatDate(DateTime date) {
-    final DateFormat formatter = DateFormat('EEEE, MMMM d');
-    return formatter.format(date);
-  }
-
   @override
   Widget build(BuildContext context) {
     final financialSummaries = context.watch<List<FinancialSummary>?>();
@@ -39,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               // Section 1
               Text("Good Evening! 👋", style: TextStyle(fontSize: 30)),
-              Text(formatDate(DateTime.now())),
+              Text(dateFormat(DateTime.now())),
 
               const SizedBox(height: 10),
 
