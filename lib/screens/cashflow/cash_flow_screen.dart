@@ -1,5 +1,6 @@
 import 'package:financemanager/screens/cashflow/add_dialog.dart';
 import 'package:financemanager/screens/cashflow/categories.dart';
+import 'package:financemanager/screens/cashflow/transaction.dart';
 import 'package:financemanager/widgets/custom/custom_card_container.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
@@ -235,9 +236,10 @@ class _CashFlowScreenState extends State<CashFlowScreen>
                   controller: _tabController,
                   children: const [
                     Categories(),
-                    Center(child: Text("Transactions Tab")),
+                    Transaction(),
                   ],
                 ),
+                
               ),
             ],
           ),

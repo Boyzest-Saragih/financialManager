@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class TransactionModel {
   TransactionModel({
     required this.date,
@@ -13,8 +15,16 @@ class TransactionModel {
   final String category;
 
   factory TransactionModel.fromJson(Map<String, dynamic> json) {
+    final dynamic dateValue = json['date'];
+    DateTime dateParse;
+    if (dateValue is Timestamp) {
+      dateParse = dateValue.toDate();
+    }else{
+      dateParse = dateValue;
+    }
+
     return TransactionModel(
-      date: json["date"]??DateTime.now(),
+      date: dateParse,
       type: json["type"] ?? "",
       amount: json["amount"] ?? 0,
       desc: json["desc"] ?? "",
@@ -23,7 +33,7 @@ class TransactionModel {
   }
 
   Map<String, dynamic> toJson() => {
-    "date":date,
+    "date": date,
     "type": type,
     "amount": amount,
     "desc": desc,

@@ -1,14 +1,17 @@
 import 'package:financemanager/firebase_options.dart';
 import 'package:financemanager/models/financial_summary_model.dart';
 import 'package:financemanager/models/monthly_expense_model.dart';
+import 'package:financemanager/models/transaction_model.dart';
 import 'package:financemanager/providers/profile_setup_provider.dart';
 import 'package:financemanager/screens/auth/register_screen.dart';
 import 'package:financemanager/screens/cashflow/categories.dart';
+import 'package:financemanager/screens/cashflow/transaction.dart';
 import 'package:financemanager/screens/drawer_screen.dart';
 import 'package:financemanager/screens/setupProfile/profile_setup_screen.dart';
 import 'package:financemanager/services/auth_services.dart';
 import 'package:financemanager/services/financial_summary_services.dart';
 import 'package:financemanager/services/monthly_expense_services.dart';
+import 'package:financemanager/services/transactions_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -23,15 +26,21 @@ void main() async {
       providers: [
         ChangeNotifierProvider(create: (_) => ProfileSetupProvider()),
         StreamProvider<List<FinancialSummary>>(
-          create: (_)=>FinancialSummaryServices().getFinancialSummary(), 
+          create: (_) => FinancialSummaryServices().getFinancialSummary(),
           initialData: [],
           child: const DrawerScreen(),
-          ),
-          
+        ),
+
         StreamProvider<List<MonthlyExpenseItem>>(
           create: (_) => MonthlyExpenseServices().getMonthlyExpenseItems(),
           initialData: [],
           child: const Categories(),
+        ),
+
+        StreamProvider<List<TransactionModel>>(
+          create: (_) => TransactionsServices().getTransactions(),
+          initialData: [],
+          child: const Transaction(),
         ),
       ],
       child: const MyApp(),

@@ -1,7 +1,6 @@
 import 'package:financemanager/models/monthly_expense_model.dart';
 import 'package:financemanager/models/transaction_model.dart';
 import 'package:financemanager/services/transactions_services.dart';
-import 'package:financemanager/utils/date_formatter.dart';
 import 'package:financemanager/widgets/custom/custom_card_container.dart';
 import 'package:financemanager/widgets/custom/custom_dropdown_field.dart';
 import 'package:financemanager/widgets/custom/custom_textField.dart';
@@ -25,7 +24,7 @@ class _AddDialogState extends State<AddDialog> {
   String? desc;
 
   final List<String> _typeItems = ["Income", "Expense"];
-  List<String>? _CategoryItems;
+  List<String>? _categoryItems;
   String? _selectedType;
   String? _selectedCategory;
 
@@ -33,12 +32,12 @@ class _AddDialogState extends State<AddDialog> {
   void initState() {
     super.initState();
     final datas = context.read<List<MonthlyExpenseItem>>();
-    _CategoryItems = datas.map((e) => e.title).toList();
+    _categoryItems = datas.map((e) => e.title).toList();
   }
 
   @override
   Widget build(BuildContext context) {
-    if (_CategoryItems == null) {
+    if (_categoryItems == null) {
       return const Center(child: CircularProgressIndicator());
     }
 
@@ -66,7 +65,7 @@ class _AddDialogState extends State<AddDialog> {
               ),
               const SizedBox(height: 16),
 
-              // 🔽 Type Dropdown
+              // Type Dropdown
               CustomDropdownField(
                 judul: "Type",
                 hint: "Income or Expense",
@@ -79,7 +78,7 @@ class _AddDialogState extends State<AddDialog> {
 
               const SizedBox(height: 16),
 
-              // 💰 Amount Field
+              // Amount Field
               CustomTextField(
                 controller: _amountCtr,
                 judul: "Amount",
@@ -95,7 +94,7 @@ class _AddDialogState extends State<AddDialog> {
 
               const SizedBox(height: 16),
 
-              // 📝 Description Field
+              // Description Field
               CustomTextField(
                 controller: _descCtr,
                 judul: "Description",
@@ -110,12 +109,12 @@ class _AddDialogState extends State<AddDialog> {
 
               const SizedBox(height: 16),
 
-              // 🏷 Category Dropdown
+              // Category Dropdown
               CustomDropdownField(
                 judul: "Category",
                 hint: "Select category",
                 value: _selectedCategory,
-                items: _CategoryItems!,
+                items: _categoryItems!,
                 onChanged: (value) {
                   setState(() => _selectedCategory = value);
                 },
@@ -123,7 +122,7 @@ class _AddDialogState extends State<AddDialog> {
 
               const SizedBox(height: 24),
 
-              // 💾 Button
+              // Button
               CustomCardContainer(
                 onTapCard: () {
                   TransactionsServices().saveTransactions(
@@ -135,7 +134,6 @@ class _AddDialogState extends State<AddDialog> {
                       category: _selectedCategory!,
                     ),
                   );
-                  print("Add transaction");
                   Navigator.pop(context);
                 },
                 isShadow: false,
