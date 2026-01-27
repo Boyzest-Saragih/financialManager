@@ -43,11 +43,11 @@ class _CashFlowScreenState extends State<CashFlowScreen>
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text("Cash Flow", style: TextStyle(fontSize: 30)),
+                      const Text("Cash Flow", style: TextStyle(fontSize: 26)),
                       const Text("Track your income & expenses"),
                     ],
                   ),
-                  Row(
+                  Column(
                     children: [
                       CustomCardContainer(
                         onTapCard: () {},
@@ -71,7 +71,7 @@ class _CashFlowScreenState extends State<CashFlowScreen>
                           ],
                         ),
                       ),
-                      const SizedBox(width: 20),
+                      const SizedBox(height: 10),
                       CustomCardContainer(
                         onTapCard: () {
                           showDialog(
@@ -84,7 +84,7 @@ class _CashFlowScreenState extends State<CashFlowScreen>
                         isShadow: false,
                         padding: 6,
                         isBorder: true,
-                        widthContainer: 70,
+                        widthContainer: 85,
                         childContainer: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -109,7 +109,7 @@ class _CashFlowScreenState extends State<CashFlowScreen>
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   CustomCardContainer(
-                    widthContainer: 185,
+                    widthContainer: 155,
                     childContainer: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -145,7 +145,7 @@ class _CashFlowScreenState extends State<CashFlowScreen>
                     ),
                   ),
                   CustomCardContainer(
-                    widthContainer: 185,
+                    widthContainer: 155,
                     childContainer: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -231,7 +231,7 @@ class _CashFlowScreenState extends State<CashFlowScreen>
               ),
               const SizedBox(height: 20),
               SizedBox(
-                height: 800,
+                height: 400,
                 child: TabBarView(
                   controller: _tabController,
                   children: const [

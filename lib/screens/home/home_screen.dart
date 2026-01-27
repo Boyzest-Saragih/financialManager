@@ -88,7 +88,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   Container(
                     padding: EdgeInsets.all(12),
-                    width: 185,
+                    width: 155,
+                    height: 145,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(15),
@@ -109,7 +110,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           "+${IdrCurrency.format(monthlyIncome)}",
                           style: TextStyle(
                             color: Colors.green,
-                            fontSize: 20,
+                            fontSize: 17,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -150,7 +151,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   Container(
                     padding: EdgeInsets.all(12),
-                    width: 185,
+                    width: 155,
+                    height: 145,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(15),
@@ -175,7 +177,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           "70%",
                           style: TextStyle(
                             color: Colors.blue,
-                            fontSize: 24,
+                            fontSize: 17,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -337,7 +339,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           InkWell(
                             onTap: () {},
                             child: CustomCardContainer(
-                              widthContainer: 170,
+                              widthContainer: 140,
+                              
                               cardColor: const Color(0xFFF9FAFB),
                               isShadow: false,
                               isBorder: true,
@@ -363,7 +366,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           InkWell(
                             onTap: () {},
                             child: CustomCardContainer(
-                              widthContainer: 170,
+                              widthContainer: 140,
                               cardColor: const Color(0xFFF9FAFB),
                               isShadow: false,
                               isBorder: true,
@@ -395,7 +398,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           InkWell(
                             onTap: () {},
                             child: CustomCardContainer(
-                              widthContainer: 170,
+                              widthContainer: 140,
                               cardColor: const Color(0xFFF9FAFB),
                               isShadow: false,
                               isBorder: true,
@@ -421,7 +424,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           InkWell(
                             onTap: () {},
                             child: CustomCardContainer(
-                              widthContainer: 170,
+                              widthContainer: 140,
                               cardColor: const Color(0xFFF9FAFB),
                               isShadow: false,
                               isBorder: true,
