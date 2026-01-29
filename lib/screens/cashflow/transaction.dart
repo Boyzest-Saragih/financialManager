@@ -11,11 +11,11 @@ class Transaction extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final datas = context.watch<List<TransactionModel>>();
-    print(datas[0].date);
 
     if (datas.isEmpty) {
       return Center(child: Text("Belum ada Transaksi"));
     }
+    print(datas[0].date);
 
     return Scaffold(
       body: ListView.separated(
@@ -24,7 +24,7 @@ class Transaction extends StatelessWidget {
         itemBuilder: (context, index) {
           final data = datas[index];
           return Container(
-            padding: EdgeInsets.all(4),
+            padding: const EdgeInsets.all(4),
             child: CustomCardContainer(
               isBorder: true,
               isShadow: false,
@@ -34,36 +34,76 @@ class Transaction extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(data.desc),
-                      Text(IdrCurrency.format(data.amount)),
+                      Expanded(
+                        child: Text(
+                          data.desc,
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      Text(
+                        IdrCurrency.format(data.amount),
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      ),
                     ],
                   ),
+                  const SizedBox(height: 8),
+
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          CustomCardContainer(
-                            isShadow: false,
-                            cardColor: Colors.blue,
-                            padding: 2,
-                            childContainer: Text(
-                              data.type == 'Expense'
-                                  ? data.category
-                                  : data.type,
+                      Flexible(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            CustomCardContainer(
+                              isShadow: false,
+                              cardColor: data.type=="Income"?Colors.blue.shade100:Colors.white60,
+                              isBorder: data.type=="Expense"?true:false,
+                              padding: 4,
+                              childContainer: Text(
+                                data.category,
+
+                                style: const TextStyle(fontSize: 12),
+                              ),
                             ),
-                          ),
-                          const SizedBox(width: 10),
-                          Text(dateFormat(data.date)),
-                        ],
+                            const SizedBox(width: 10),
+                            Flexible(
+                              child: Text(
+                                dateFormat(data.date),
+                                style: const TextStyle(
+                                  fontSize: 12,
+                                  color: Colors.grey,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
+
+                      const SizedBox(width: 8),
+
                       CustomCardContainer(
-                        padding: 1,
+                        padding: 4,
                         isShadow: false,
                         cardColor:
-                            data.type == "Expense" ? Colors.red : Colors.green,
-                        childContainer: Text(data.type),
+                            data.type == "Expense"
+                                ? Colors.red.withOpacity(0.1)
+                                : Colors.green.withOpacity(0.1),
+                        childContainer: Text(
+                          data.type,
+                          style: TextStyle(
+                            color:
+                                data.type == "Expense"
+                                    ? Colors.red
+                                    : Colors.green,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12,
+                          ),
+                        ),
                       ),
                     ],
                   ),

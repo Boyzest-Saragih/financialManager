@@ -3,6 +3,7 @@ import 'package:financemanager/models/transaction_model.dart';
 import 'package:financemanager/services/transactions_services.dart';
 import 'package:financemanager/widgets/custom/custom_card_container.dart';
 import 'package:financemanager/widgets/custom/custom_dropdown_field.dart';
+import 'package:financemanager/widgets/custom/custom_snackbar.dart';
 import 'package:financemanager/widgets/custom/custom_textField.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -22,6 +23,7 @@ class _AddDialogState extends State<AddDialog> {
 
   int? amount;
   String? desc;
+  String? errMsg;
 
   final List<String> _typeItems = ["Income", "Expense"];
   List<String>? _categoryItems;
@@ -72,7 +74,11 @@ class _AddDialogState extends State<AddDialog> {
                 value: _selectedType,
                 items: _typeItems,
                 onChanged: (value) {
-                  setState(() => _selectedType = value);
+                  setState(() {
+                    _selectedType = value;
+                    _selectedCategory = null;
+                    errMsg = null;
+                  });
                 },
               ),
 
@@ -88,6 +94,7 @@ class _AddDialogState extends State<AddDialog> {
                 onChangedField: (value) {
                   setState(() {
                     amount = int.tryParse(value) ?? 0;
+                    errMsg = null;
                   });
                 },
               ),
@@ -103,6 +110,7 @@ class _AddDialogState extends State<AddDialog> {
                 onChangedField: (value) {
                   setState(() {
                     desc = value;
+                    errMsg = null;
                   });
                 },
               ),
@@ -114,17 +122,64 @@ class _AddDialogState extends State<AddDialog> {
                 judul: "Category",
                 hint: "Select category",
                 value: _selectedCategory,
-                items: _categoryItems!,
+                items:
+                    _selectedType == "Expense"
+                        ? _categoryItems!
+                        : ["Salary", "Investment", "Give"],
                 onChanged: (value) {
-                  setState(() => _selectedCategory = value);
+                  setState(() {
+                    _selectedCategory = value;
+                    errMsg = null;
+                  });
                 },
               ),
 
               const SizedBox(height: 24),
 
+              if (errMsg != null) ...[
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: Colors.red.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: Colors.red),
+                  ),
+                  child: Row(
+                    children: [
+                      const Icon(
+                        Icons.error_outline,
+                        color: Colors.red,
+                        size: 20,
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: Text(
+                          errMsg!,
+                          style: const TextStyle(
+                            color: Colors.red,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 10),
+              ],
+
               // Button
               CustomCardContainer(
                 onTapCard: () {
+                  if (_selectedType == null ||
+                      amount == null ||
+                      desc == null ||
+                      _selectedCategory == null) {
+                    setState(() {
+                      errMsg = "Silahkan isi semua data terlebih dahulu";
+                    });
+                    return;
+                  }
+
                   TransactionsServices().saveTransactions(
                     TransactionModel(
                       date: DateTime.now(),
