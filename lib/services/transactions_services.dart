@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:financemanager/models/transaction_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 class TransactionsServices {
   final user = FirebaseAuth.instance.currentUser;
@@ -36,7 +37,23 @@ class TransactionsServices {
           .doc(user!.uid)
           .collection("transactions");
 
+      final docTotalBalance = FirebaseFirestore.instance
+          .collection('user')
+          .doc(user!.uid)
+          .collection("financial_data")
+          .doc("user_financial_summary");
+
       await docRef.add(transactions.toJson());
+
+      if (transactions.type == "Income") {
+        await docTotalBalance.update({
+          "balance": FieldValue.increment(transactions.amount),
+        });
+      } else {
+        await docTotalBalance.update({
+          "balance": FieldValue.increment(-transactions.amount),
+        });
+      }
       print("done");
     } catch (e) {
       rethrow;
