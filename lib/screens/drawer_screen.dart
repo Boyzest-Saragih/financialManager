@@ -1,6 +1,7 @@
 import 'package:financemanager/screens/cashflow/cash_flow_screen.dart';
 import 'package:financemanager/screens/chat/chat_screen.dart';
 import 'package:financemanager/screens/home/home_screen.dart';
+import 'package:financemanager/screens/savings/savings_screen.dart';
 import 'package:flutter/material.dart';
 
 class DrawerScreen extends StatefulWidget {
@@ -14,10 +15,10 @@ class _DrawerScreenState extends State<DrawerScreen> {
   int _currentIndex = 0;
 
   final List<Widget> _screens = [
-    CashFlowScreen(),
+    SavingsScreen(),
     HomeScreen(),
+    CashFlowScreen(),
     ChatScreen(),
-    Placeholder(), // Ganti dengan ScanScreen()
     Placeholder(), // Ganti dengan ScanScreen()
   ];
 

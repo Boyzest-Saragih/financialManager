@@ -62,7 +62,6 @@ class MyApp extends StatelessWidget {
         primaryColor: const Color(0xFFF9FAFB),
       ),
       home:
-          // const CashFlowScreen()
           const Wrapper(),
     );
   }
