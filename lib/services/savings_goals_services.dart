@@ -5,9 +5,28 @@ import 'package:firebase_auth/firebase_auth.dart';
 class SavingsGoalsServices {
   final user = FirebaseAuth.instance.currentUser;
 
-  Future<void> saveSavingGoal(
-    List<SavingsGoalItem> savingGoalsData,
-  ) async {
+  Stream<List<SavingsGoalItem>> getSavingGoals() {
+    if (user == null) {
+      return Stream.value([]);
+    }
+
+    return FirebaseFirestore.instance
+        .collection('user')
+        .doc(user!.uid)
+        .collection("financial_data")
+        .doc('user_saving_goals')
+        .snapshots()
+        .map((snapshot) {
+          if (!snapshot.exists || snapshot.data() == null) {
+            return [];
+          }
+
+          final datas = snapshot.data() as Map<String, dynamic>;
+          return ProfileSavingGoals.fromMap(datas).savingGoals;
+        });
+  }
+
+  Future<void> saveSavingGoal(List<SavingsGoalItem> savingGoalsData) async {
     final profile = ProfileSavingGoals(savingGoals: savingGoalsData);
 
     final docRef = FirebaseFirestore.instance

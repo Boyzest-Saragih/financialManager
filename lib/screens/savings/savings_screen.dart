@@ -1,31 +1,57 @@
 import 'package:financemanager/screens/cashflow/add_dialog.dart';
+import 'package:financemanager/screens/cashflow/categories.dart';
+import 'package:financemanager/screens/cashflow/transaction.dart';
+import 'package:financemanager/screens/savings/active_goals.dart';
 import 'package:financemanager/screens/savings/banner_progress.dart';
 import 'package:financemanager/widgets/custom/custom_card_container.dart';
 import 'package:flutter/material.dart';
 
-class SavingsScreen extends StatelessWidget {
+class SavingsScreen extends StatefulWidget {
   const SavingsScreen({super.key});
-  
-  TabController? get _tabController => null;
+
+  @override
+  State<SavingsScreen> createState() => _SavingsScreenState();
+}
+
+// Tambahkan SingleTickerProviderStateMixin agar TabController bisa bekerja dengan 'vsync: this'
+class _SavingsScreenState extends State<SavingsScreen> with SingleTickerProviderStateMixin {
+  late TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    // Inisialisasi controller di sini
+    _tabController = TabController(length: 2, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    // Hapus controller dari memori saat widget dihancurkan
+    _tabController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
-          padding: EdgeInsets.all(14),
+          padding: const EdgeInsets.all(14),
           child: Column(
             children: [
-              // title sction
+              // title section
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Column(
+                  const Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text("Savings Goals", style: TextStyle(fontSize: 26)),
-                      const Text("Track multiple financial dreams"),
+                      Text(
+                        "Savings Goals",
+                        style: TextStyle(fontSize: 26),
+                      ),
+                      Text("Track multiple financial dreams"),
                     ],
                   ),
                   Column(
@@ -34,7 +60,7 @@ class SavingsScreen extends StatelessWidget {
                         onTapCard: () {
                           showDialog(
                             context: context,
-                            builder: (context) => AddDialog(),
+                            builder: (context) => const AddDialog(),
                           );
                         },
                         cardColor: Colors.blue,
@@ -42,15 +68,15 @@ class SavingsScreen extends StatelessWidget {
                         padding: 6,
                         isBorder: true,
                         widthContainer: 115,
-                        childContainer: Row(
+                        childContainer: const Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            const Icon(
+                            Icon(
                               Icons.add,
                               size: 25,
                               color: Colors.white,
                             ),
-                            const Text(
+                            Text(
                               "New Goal",
                               style: TextStyle(color: Colors.white),
                             ),
@@ -61,11 +87,32 @@ class SavingsScreen extends StatelessWidget {
                   ),
                 ],
               ),
-            
-              const SizedBox(height: 20,),
-              // Banner Progress section
-              BannerProgress()
 
+              const SizedBox(height: 20),
+              // Banner Progress section
+              const BannerProgress(),
+
+              TabBar(
+                controller: _tabController,
+                labelColor: Colors.blue,
+                unselectedLabelColor: Colors.grey,
+                tabs: const [
+                  Tab(text: "Active Goals"),
+                  Tab(text: "Savings Goals"),
+                ],
+              ),
+
+              const SizedBox(height: 20),
+              SizedBox(
+                height: 400,
+                child: TabBarView(
+                  controller: _tabController,
+                  children: const [
+                    ActiveGoals(),
+                    Transaction(),
+                  ],
+                ),
+              ),
             ],
           ),
         ),

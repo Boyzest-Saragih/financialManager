@@ -1,6 +1,7 @@
 import 'package:financemanager/firebase_options.dart';
 import 'package:financemanager/models/financial_summary_model.dart';
 import 'package:financemanager/models/monthly_expense_model.dart';
+import 'package:financemanager/models/savings_goals_model.dart';
 import 'package:financemanager/models/transaction_model.dart';
 import 'package:financemanager/providers/profile_setup_provider.dart';
 import 'package:financemanager/screens/auth/register_screen.dart';
@@ -11,6 +12,7 @@ import 'package:financemanager/screens/setupProfile/profile_setup_screen.dart';
 import 'package:financemanager/services/auth_services.dart';
 import 'package:financemanager/services/financial_summary_services.dart';
 import 'package:financemanager/services/monthly_expense_services.dart';
+import 'package:financemanager/services/savings_goals_services.dart';
 import 'package:financemanager/services/transactions_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -33,6 +35,12 @@ void main() async {
 
         StreamProvider<List<MonthlyExpenseItem>>(
           create: (_) => MonthlyExpenseServices().getMonthlyExpenseItems(),
+          initialData: [],
+          child: const Categories(),
+        ),
+
+         StreamProvider<List<SavingsGoalItem>>(
+          create: (_) => SavingsGoalsServices().getSavingGoals(),
           initialData: [],
           child: const Categories(),
         ),
