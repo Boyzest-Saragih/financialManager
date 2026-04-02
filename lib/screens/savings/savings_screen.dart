@@ -14,7 +14,8 @@ class SavingsScreen extends StatefulWidget {
 }
 
 // Tambahkan SingleTickerProviderStateMixin agar TabController bisa bekerja dengan 'vsync: this'
-class _SavingsScreenState extends State<SavingsScreen> with SingleTickerProviderStateMixin {
+class _SavingsScreenState extends State<SavingsScreen>
+    with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
   @override
@@ -34,87 +35,79 @@ class _SavingsScreenState extends State<SavingsScreen> with SingleTickerProvider
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          padding: const EdgeInsets.all(14),
-          child: Column(
-            children: [
-              // title section
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      body: SafeArea(
+        child: Column(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(14),
+              child: Column(
                 children: [
-                  const Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  // title section
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        "Savings Goals",
-                        style: TextStyle(fontSize: 26),
+                      const Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text("Savings Goals", style: TextStyle(fontSize: 26)),
+                          Text("Track multiple financial dreams"),
+                        ],
                       ),
-                      Text("Track multiple financial dreams"),
+                      Column(
+                        children: [
+                          CustomCardContainer(
+                            onTapCard: () {
+                              showDialog(
+                                context: context,
+                                builder: (context) => const AddDialog(),
+                              );
+                            },
+                            cardColor: Colors.blue,
+                            isShadow: false,
+                            padding: 6,
+                            isBorder: true,
+                            widthContainer: 115,
+                            childContainer: const Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Icon(Icons.add, size: 25, color: Colors.white),
+                                Text(
+                                  "New Goal",
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
-                  Column(
-                    children: [
-                      CustomCardContainer(
-                        onTapCard: () {
-                          showDialog(
-                            context: context,
-                            builder: (context) => const AddDialog(),
-                          );
-                        },
-                        cardColor: Colors.blue,
-                        isShadow: false,
-                        padding: 6,
-                        isBorder: true,
-                        widthContainer: 115,
-                        childContainer: const Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Icon(
-                              Icons.add,
-                              size: 25,
-                              color: Colors.white,
-                            ),
-                            Text(
-                              "New Goal",
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
+
+                  const SizedBox(height: 20),
+                  // Banner Progress section
+                  const BannerProgress(),
                 ],
               ),
+            ),
+            TabBar(
+              controller: _tabController,
+              labelColor: Colors.blue,
+              unselectedLabelColor: Colors.grey,
+              tabs: const [
+                Tab(text: "Active Goals"),
+                Tab(text: "Savings Goals"),
+              ],
+            ),
 
-              const SizedBox(height: 20),
-              // Banner Progress section
-              const BannerProgress(),
-
-              TabBar(
+            const SizedBox(height: 20),
+            Expanded(
+              child: TabBarView(
                 controller: _tabController,
-                labelColor: Colors.blue,
-                unselectedLabelColor: Colors.grey,
-                tabs: const [
-                  Tab(text: "Active Goals"),
-                  Tab(text: "Savings Goals"),
-                ],
+                children: const [ActiveGoals(), Transaction()],
               ),
-
-              const SizedBox(height: 20),
-              SizedBox(
-                height: 400,
-                child: TabBarView(
-                  controller: _tabController,
-                  children: const [
-                    ActiveGoals(),
-                    Transaction(),
-                  ],
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
